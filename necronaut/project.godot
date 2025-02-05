@@ -12,12 +12,17 @@ config_version=5
 
 config/name="Necronaut"
 run/main_scene="res://scene/Test level/test_level.tscn"
-config/features=PackedStringArray("4.3", "Mobile")
+config/features=PackedStringArray("4.3", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [dotnet]
 
 project/assembly_name="Necronaut"
+
+[layer_names]
+
+2d_navigation/layer_1="Platforms"
+2d_navigation/layer_2="Grass"
 
 [rendering]
 
