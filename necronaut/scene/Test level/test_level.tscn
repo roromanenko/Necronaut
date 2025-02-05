@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=4 uid="uid://bginfqoxjlh3x"]
 
 [ext_resource type="TileSet" uid="uid://cetctps64jijj" path="res://resources/GrassPlatform.tres" id="1_hsma1"]
-[ext_resource type="PackedScene" uid="uid://1v5juqred31s" path="res://BG Forest1.tscn" id="2_kna6t"]
+[ext_resource type="PackedScene" path="res://BG Forest1.tscn" id="2_kna6t"]
 [ext_resource type="PackedScene" uid="uid://bnwfrk70ha0xn" path="res://scene/player/player.tscn" id="3_dt2ld"]
 [ext_resource type="Script" path="res://scene/player/Player.cs" id="4_jv8xf"]
 

@@ -1,5 +1,6 @@
-[gd_scene load_steps=49 format=3 uid="uid://bnwfrk70ha0xn"]
+[gd_scene load_steps=50 format=3 uid="uid://bnwfrk70ha0xn"]
 
+[ext_resource type="Script" path="res://scene/player/Player.cs" id="1_5bi3t"]
 [ext_resource type="Texture2D" uid="uid://ds3bnlgsahkst" path="res://scene/player/player white.png" id="1_qk2qi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nl11i"]
@@ -206,7 +207,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3yhrs")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 5.0
 }, {
@@ -359,6 +360,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_5bi3t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -22)
@@ -369,4 +371,3 @@ position = Vector2(0, -31.0735)
 scale = Vector2(0.923077, 0.971048)
 sprite_frames = SubResource("SpriteFrames_gue51")
 animation = &"attack"
-frame_progress = 0.965831
