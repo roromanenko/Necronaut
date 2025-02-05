@@ -206,7 +206,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d2i2w")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 5.0
 }, {
@@ -369,4 +369,4 @@ position = Vector2(0, -31.0735)
 scale = Vector2(0.923077, 0.971048)
 sprite_frames = SubResource("SpriteFrames_gue51")
 animation = &"walk"
-frame_progress = 0.475576
+frame_progress = 0.477761
