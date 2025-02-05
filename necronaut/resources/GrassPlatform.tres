@@ -1,0 +1,10 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cetctps64jijj"]
+
+[ext_resource type="Texture2D" uid="uid://bwsnfrdjanfx" path="res://assets/tileset/Mossy - TileSet.png" id="1_e7gna"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_subw0"]
+texture = ExtResource("1_e7gna")
+texture_region_size = Vector2i(64, 64)
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_subw0")

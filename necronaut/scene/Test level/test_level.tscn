@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bginfqoxjlh3x"]
+
+[ext_resource type="TileSet" uid="uid://cetctps64jijj" path="res://resources/GrassPlatform.tres" id="1_hsma1"]
+
+[node name="Test level" type="Node"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_hsma1")
