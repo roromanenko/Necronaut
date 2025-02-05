@@ -15,6 +15,10 @@ run/main_scene="res://scene/Test level/test_level.tscn"
 config/features=PackedStringArray("4.3", "C#", "Mobile")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/mode=3
+
 [dotnet]
 
 project/assembly_name="Necronaut"

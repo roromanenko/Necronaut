@@ -93,7 +93,7 @@
 
 [resource]
 frames = 90
-speed_scale = -40.0
+speed_scale = -26.3
 frame_0/texture = ExtResource("1_hvxxh")
 frame_1/texture = ExtResource("2_mw0fq")
 frame_1/duration = 1.0
