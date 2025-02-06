@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dve7rcyrbhycf"]
+
+[ext_resource type="Texture2D" uid="uid://b7vyh2n0rvhim" path="res://assets/decoration/TX Village Props.png" id="1_apqp4"]
+[ext_resource type="Texture2D" uid="uid://5nxxh5lffmnr" path="res://assets/textures of light/64x64.png" id="2_psj5g"]
+
+[node name="StaticBody2D" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("1_apqp4")
+region_enabled = true
+region_rect = Rect2(928, 352, 32, 32)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -9)
+color = Color(1, 1, 0.709804, 1)
+energy = 0.0
+texture = ExtResource("2_psj5g")
+texture_scale = 0.76

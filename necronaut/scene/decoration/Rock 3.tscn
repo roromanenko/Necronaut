@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://6lt54pafnj4w"]
+
+[ext_resource type="Texture2D" uid="uid://b7vyh2n0rvhim" path="res://assets/decoration/TX Village Props.png" id="1_0cggl"]
+
+[node name="StaticBody2D" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("1_0cggl")
+region_enabled = true
+region_rect = Rect2(800, 352, 64, 32)

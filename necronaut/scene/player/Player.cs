@@ -4,8 +4,8 @@ using System;
 public partial class Player : CharacterBody2D
 {
   private const float Speed = 300.0f;
-  private const float JumpVelocity = -400.0f;
-  private float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+  private const float JumpVelocity = -500.0f;
+  private float Gravity = 2000f;
   private float direction = 0;
   private bool isJumped = false;
   private bool isPunch = false;
