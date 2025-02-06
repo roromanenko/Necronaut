@@ -76,12 +76,15 @@ public partial class Player : CharacterBody2D
 	{
 		if (_sprite == null) return;
 
-		if (_isPunch)
+
+		if (_isJumped){	
+			_isPunch = false;
+			_sprite.Play(Velocity.Y <= 0 ? "jump" : "fall");}
+		else if (Velocity.X != 0){
+			_isPunch = false;
+			_sprite.Play("run");}
+		else if (_isPunch)
 			_sprite.Play("attack");
-		else if (_isJumped)
-			_sprite.Play(Velocity.Y <= 0 ? "jump" : "fall");
-		else if (Velocity.X != 0)
-			_sprite.Play("run");
 		else
 			_sprite.Play("idle");
 	}
