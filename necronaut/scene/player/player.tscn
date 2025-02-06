@@ -370,8 +370,8 @@ shape = SubResource("RectangleShape2D_nl11i")
 position = Vector2(0, -31.0735)
 scale = Vector2(0.923077, 0.971048)
 sprite_frames = SubResource("SpriteFrames_gue51")
-animation = &"walk"
-frame_progress = 0.75071
+animation = &"idle"
+frame_progress = 0.871091
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(-0.5, -22)
