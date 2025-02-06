@@ -5,7 +5,7 @@
 [node name="StaticBody2D" type="StaticBody2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(0, -16)
 texture = ExtResource("1_0cggl")
 region_enabled = true
-region_rect = Rect2(800, 359, 64, 32)
+region_rect = Rect2(800, 352, 64, 32)
