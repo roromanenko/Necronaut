@@ -1,6 +1,8 @@
-[gd_scene load_steps=48 format=3 uid="uid://talgujj50kta"]
+[gd_scene load_steps=58 format=3 uid="uid://talgujj50kta"]
 
 [ext_resource type="Texture2D" uid="uid://bxdjbr6kh86i7" path="res://assets/weapons/Iron Axe.png" id="1_5hesr"]
+[ext_resource type="Texture2D" uid="uid://bagqf7xjg4plm" path="res://assets/weapons/Iron Axe Falling Attack.png" id="2_hrx8o"]
+[ext_resource type="Texture2D" uid="uid://c2e56nevpuc3j" path="res://assets/weapons/Iron Axe Ground Attack.png" id="3_jbbag"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cn348"]
 atlas = ExtResource("1_5hesr")
@@ -81,6 +83,38 @@ region = Rect2(160, 256, 80, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_qbjrt"]
 atlas = ExtResource("1_5hesr")
 region = Rect2(240, 256, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aowne"]
+atlas = ExtResource("2_hrx8o")
+region = Rect2(0, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25pvd"]
+atlas = ExtResource("2_hrx8o")
+region = Rect2(80, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v4nc"]
+atlas = ExtResource("2_hrx8o")
+region = Rect2(160, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xo72l"]
+atlas = ExtResource("2_hrx8o")
+region = Rect2(240, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4nbg2"]
+atlas = ExtResource("3_jbbag")
+region = Rect2(0, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwu8e"]
+atlas = ExtResource("3_jbbag")
+region = Rect2(80, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mg3dm"]
+atlas = ExtResource("3_jbbag")
+region = Rect2(160, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yrjxi"]
+atlas = ExtResource("3_jbbag")
+region = Rect2(240, 0, 80, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jk46j"]
 atlas = ExtResource("1_5hesr")
@@ -261,6 +295,40 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_aowne")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_25pvd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v4nc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xo72l")
+}],
+"loop": true,
+"name": &"falling attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4nbg2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwu8e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mg3dm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yrjxi")
+}],
+"loop": true,
+"name": &"ground attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_jk46j")
 }, {
 "duration": 1.0,
@@ -360,4 +428,4 @@ animations = [{
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_odl31")
-animation = &"attack"
+animation = &"death"

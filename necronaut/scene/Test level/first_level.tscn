@@ -675,6 +675,11 @@ position = Vector2(2176, 3589)
 rotation = -0.359538
 scale = Vector2(1.275, 1.275)
 
+[node name="Lamp 20" parent="Decorations" instance=ExtResource("4_g1cwg")]
+position = Vector2(3530, 3626)
+rotation = -0.359538
+scale = Vector2(1.275, 1.275)
+
 [node name="Lamp 13" parent="Decorations" instance=ExtResource("4_g1cwg")]
 position = Vector2(1138, 3949)
 rotation = 0.179769
@@ -937,7 +942,7 @@ rotation = 0.0890118
 scale = Vector2(9.975, 9.986)
 
 [node name="Beamv2 7" parent="Decorations" instance=ExtResource("8_kad3k")]
-position = Vector2(3101, 3642)
+position = Vector2(3104, 3642)
 rotation = -0.0890118
 scale = Vector2(7.3, 10.617)
 
