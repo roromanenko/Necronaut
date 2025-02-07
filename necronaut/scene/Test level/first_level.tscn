@@ -963,7 +963,7 @@ script = ExtResource("5_dy3qu")
 offset = Vector2(0, -120)
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
-position_smoothing_speed = 2.0
+position_smoothing_speed = 7.0
 drag_horizontal_enabled = true
 
 [node name="Animated plants 1" type="TileMapLayer" parent="."]

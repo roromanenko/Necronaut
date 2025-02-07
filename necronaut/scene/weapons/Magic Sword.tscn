@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://ddqg84i5scbv8"]
+[gd_scene load_steps=57 format=3 uid="uid://ddqg84i5scbv8"]
 
 [ext_resource type="Texture2D" uid="uid://b43rgic5gqevl" path="res://assets/weapons/magic sword/Magic sword attack.png" id="1_1osyg"]
 [ext_resource type="Texture2D" uid="uid://damwll85btx6j" path="res://assets/weapons/magic sword/Magic sword idle.png" id="1_puqpv"]
@@ -97,10 +97,6 @@ region = Rect2(240, 0, 80, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_uuo11"]
 atlas = ExtResource("5_dtogn")
 region = Rect2(0, 0, 80, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b666y"]
-atlas = ExtResource("5_dtogn")
-region = Rect2(80, 0, 80, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aittw"]
 atlas = ExtResource("5_dtogn")
@@ -297,9 +293,6 @@ animations = [{
 "texture": SubResource("AtlasTexture_uuo11")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_b666y")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_aittw")
 }, {
 "duration": 1.0,
@@ -410,6 +403,6 @@ animations = [{
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_xvg2o")
-animation = &"falling attack"
-frame = 3
-frame_progress = 0.111471
+animation = &"ground attack"
+frame = 2
+frame_progress = 1.0

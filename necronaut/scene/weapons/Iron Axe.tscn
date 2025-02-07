@@ -1,6 +1,7 @@
 [gd_scene load_steps=58 format=3 uid="uid://talgujj50kta"]
 
 [ext_resource type="Texture2D" uid="uid://bxdjbr6kh86i7" path="res://assets/weapons/Iron Axe.png" id="1_5hesr"]
+[ext_resource type="Script" path="res://scene/weapons/MeleeWeapon.cs" id="1_5yvuh"]
 [ext_resource type="Texture2D" uid="uid://bagqf7xjg4plm" path="res://assets/weapons/Iron Axe Falling Attack.png" id="2_hrx8o"]
 [ext_resource type="Texture2D" uid="uid://c2e56nevpuc3j" path="res://assets/weapons/Iron Axe Ground Attack.png" id="3_jbbag"]
 
@@ -104,10 +105,6 @@ region = Rect2(240, 0, 80, 64)
 atlas = ExtResource("3_jbbag")
 region = Rect2(0, 0, 80, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hwu8e"]
-atlas = ExtResource("3_jbbag")
-region = Rect2(80, 0, 80, 64)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_mg3dm"]
 atlas = ExtResource("3_jbbag")
 region = Rect2(160, 0, 80, 64)
@@ -136,21 +133,21 @@ region = Rect2(240, 0, 80, 64)
 atlas = ExtResource("1_5hesr")
 region = Rect2(320, 0, 80, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6sudg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnbrn"]
 atlas = ExtResource("1_5hesr")
-region = Rect2(0, 256, 80, 64)
+region = Rect2(0, 192, 80, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fhxdy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_cion5"]
 atlas = ExtResource("1_5hesr")
-region = Rect2(80, 256, 80, 64)
+region = Rect2(80, 192, 80, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0viae"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_no5th"]
 atlas = ExtResource("1_5hesr")
-region = Rect2(160, 256, 80, 64)
+region = Rect2(160, 192, 80, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r8sn6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_30wmm"]
 atlas = ExtResource("1_5hesr")
-region = Rect2(240, 256, 80, 64)
+region = Rect2(240, 192, 80, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v4jd6"]
 atlas = ExtResource("1_5hesr")
@@ -315,15 +312,12 @@ animations = [{
 "texture": SubResource("AtlasTexture_4nbg2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hwu8e")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_mg3dm")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yrjxi")
 }],
-"loop": true,
+"loop": false,
 "name": &"ground attack",
 "speed": 5.0
 }, {
@@ -349,16 +343,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6sudg")
+"texture": SubResource("AtlasTexture_mnbrn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fhxdy")
+"texture": SubResource("AtlasTexture_cion5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0viae")
+"texture": SubResource("AtlasTexture_no5th")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r8sn6")
+"texture": SubResource("AtlasTexture_30wmm")
 }],
 "loop": true,
 "name": &"jump",
@@ -424,8 +418,11 @@ animations = [{
 }]
 
 [node name="IronAxe" type="Node2D"]
+script = ExtResource("1_5yvuh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_odl31")
-animation = &"death"
+animation = &"ground attack"
+frame = 2
+frame_progress = 1.0

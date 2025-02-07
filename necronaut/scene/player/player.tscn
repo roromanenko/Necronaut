@@ -327,7 +327,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j72ev")
 }],
-"loop": true,
+"loop": false,
 "name": &"ground attack",
 "speed": 5.0
 }, {
@@ -438,7 +438,7 @@ shape = SubResource("RectangleShape2D_nl11i")
 position = Vector2(0, -31.0735)
 scale = Vector2(0.923077, 0.971048)
 sprite_frames = SubResource("SpriteFrames_gue51")
-animation = &"walk"
+animation = &"ground attack"
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(-0.5, -22)
@@ -450,3 +450,7 @@ shadow_filter_smooth = 3.0
 texture = ExtResource("2_qye5i")
 offset = Vector2(0, -10)
 texture_scale = 1.5
+
+[node name="WeaponSocket" type="Node2D" parent="."]
+position = Vector2(0, 1.26)
+scale = Vector2(1.015, 1.015)
