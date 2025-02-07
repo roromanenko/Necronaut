@@ -1,6 +1,7 @@
-[gd_scene load_steps=57 format=3 uid="uid://ddqg84i5scbv8"]
+[gd_scene load_steps=58 format=3 uid="uid://ddqg84i5scbv8"]
 
 [ext_resource type="Texture2D" uid="uid://b43rgic5gqevl" path="res://assets/weapons/magic sword/Magic sword attack.png" id="1_1osyg"]
+[ext_resource type="Script" path="res://scene/weapons/MeleeWeapon.cs" id="1_dc507"]
 [ext_resource type="Texture2D" uid="uid://damwll85btx6j" path="res://assets/weapons/magic sword/Magic sword idle.png" id="1_puqpv"]
 [ext_resource type="Texture2D" uid="uid://b2fd710gmk14" path="res://assets/weapons/magic sword/Magic sword death.png" id="2_8ayae"]
 [ext_resource type="Texture2D" uid="uid://17ertmjc6ttj" path="res://assets/weapons/magic sword/Magic sword walk.png" id="2_e6ro5"]
@@ -399,10 +400,9 @@ animations = [{
 }]
 
 [node name="MagicSword" type="Node2D"]
+script = ExtResource("1_dc507")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_xvg2o")
-animation = &"ground attack"
-frame = 2
-frame_progress = 1.0
+animation = &"walk"

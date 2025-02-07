@@ -43,10 +43,10 @@ public partial class Player : CharacterBody2D
 		_sprite.SpeedScale = _defaultSpeedScale;
 		_sprite.AnimationFinished += OnAnimationFinished;
 
-		PackedScene weaponScene = ResourceLoader.Load<PackedScene>("res://scene/weapons/Iron Axe.tscn");
+		PackedScene weaponScene = ResourceLoader.Load<PackedScene>("res://scene/weapons/Magic Sword.tscn");
 		if (weaponScene == null)
 		{
-			GD.PrintErr("res://scene/weapons/Iron Axe.tscn");
+			GD.PrintErr("res://scene/weapons/Magic Sword.tscn");
 		}
 		else
 		{

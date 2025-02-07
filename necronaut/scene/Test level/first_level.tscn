@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://bftimluj4gth1"]
+[gd_scene load_steps=14 format=4 uid="uid://bftimluj4gth1"]
 
 [ext_resource type="PackedScene" uid="uid://1v5juqred31s" path="res://BG Forest1.tscn" id="2_5phxk"]
 [ext_resource type="PackedScene" uid="uid://byaeiq58lls2y" path="res://scene/decoration/Lamp post.tscn" id="3_bjdm4"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dve7rcyrbhycf" path="res://scene/decoration/Rock 2.tscn" id="6_ve62b"]
 [ext_resource type="PackedScene" uid="uid://6lt54pafnj4w" path="res://scene/decoration/Rock 3.tscn" id="7_esm1w"]
 [ext_resource type="PackedScene" uid="uid://dau47c2k1i4o1" path="res://scene/decoration/Beam 2.tscn" id="8_kad3k"]
+[ext_resource type="PackedScene" uid="uid://cyia7ossa0y82" path="res://scene/enemies/Goblin scout.tscn" id="9_ot8i3"]
 
 [sub_resource type="CSharpScript" id="CSharpScript_cs1u7"]
 script/source = "using Godot;
@@ -954,6 +955,10 @@ scale = Vector2(4.855, 6.884)
 [node name="Beamv2 2" parent="Decorations" instance=ExtResource("8_kad3k")]
 position = Vector2(3664, 387)
 scale = Vector2(4, 5.735)
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("9_ot8i3")]
+position = Vector2(1333, 582)
+scale = Vector2(3, 3)
 
 [node name="Player" parent="." instance=ExtResource("4_myqvg")]
 position = Vector2(1103, 586)
