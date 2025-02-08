@@ -1,12 +1,16 @@
-[gd_scene load_steps=55 format=3 uid="uid://cyia7ossa0y82"]
+[gd_scene load_steps=56 format=3 uid="uid://cyia7ossa0y82"]
 
 [ext_resource type="Texture2D" uid="uid://cpgymst8r5yeo" path="res://assets/enemies/goblin scout/goblin scout attack.png" id="1_y0l4f"]
+[ext_resource type="Script" path="res://scene/enemies/GoblinScout.cs" id="1_yyojh"]
 [ext_resource type="Texture2D" uid="uid://ubs1ql0kqvtn" path="res://assets/enemies/goblin scout/goblin scout death.png" id="2_nuihd"]
 [ext_resource type="Texture2D" uid="uid://rbda38jdsgsd" path="res://assets/enemies/goblin scout/goblin scout hit.png" id="3_e8rhm"]
 [ext_resource type="Texture2D" uid="uid://v16t7q0jle65" path="res://assets/enemies/goblin scout/goblin scout idle.png" id="4_gkvmp"]
 [ext_resource type="Texture2D" uid="uid://e7twuj103oqw" path="res://assets/enemies/goblin scout/goblin scout run.png" id="5_ry7dm"]
 [ext_resource type="Texture2D" uid="uid://cnol5r1ulkoic" path="res://assets/enemies/goblin scout/goblin scout walk.png" id="6_x63ce"]
 [ext_resource type="Texture2D" uid="uid://5nxxh5lffmnr" path="res://assets/textures of light/64x64.png" id="7_bjg5a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1cl1k"]
+size = Vector2(14, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6q7rh"]
 atlas = ExtResource("1_y0l4f")
@@ -356,27 +360,29 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1cl1k"]
-size = Vector2(14, 16)
-
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="GoblinScout" type="CharacterBody2D"]
+position = Vector2(-2, -3)
 scale = Vector2(2, 2)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(104.188, 1, 0.901961, 1)
-position = Vector2(0, -13)
-sprite_frames = SubResource("SpriteFrames_hoq5u")
-animation = &"idle"
-frame_progress = 0.338963
+script = ExtResource("1_yyojh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_1cl1k")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(104.188, 1, 0.901961, 1)
+position = Vector2(0, -14)
+scale = Vector2(1, 1.03125)
+sprite_frames = SubResource("SpriteFrames_hoq5u")
+animation = &"hit"
+
 [node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-146.5, 346.5)
 energy = 0.34
 shadow_enabled = true
 texture = ExtResource("7_bjg5a")
 offset = Vector2(0, -8.235)
 texture_scale = 0.66
+
+[node name="GoblinScout" type="Node2D" parent="."]
+position = Vector2(-302, 631)

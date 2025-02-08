@@ -6,12 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://sk45myipvghp" path="res://scene/decoration/Lamp.tscn" id="4_g1cwg"]
 [ext_resource type="PackedScene" uid="uid://bnwfrk70ha0xn" path="res://scene/player/player.tscn" id="4_myqvg"]
 [ext_resource type="PackedScene" uid="uid://7h0atgvydivd" path="res://scene/decoration/Rock 1.tscn" id="5_4v1k4"]
-[ext_resource type="Script" path="res://scene/player/Player.cs" id="5_dy3qu"]
 [ext_resource type="TileSet" uid="uid://cetctps64jijj" path="res://resources/GrassPlatform.tres" id="6_okhbr"]
 [ext_resource type="PackedScene" uid="uid://dve7rcyrbhycf" path="res://scene/decoration/Rock 2.tscn" id="6_ve62b"]
 [ext_resource type="PackedScene" uid="uid://6lt54pafnj4w" path="res://scene/decoration/Rock 3.tscn" id="7_esm1w"]
 [ext_resource type="PackedScene" uid="uid://dau47c2k1i4o1" path="res://scene/decoration/Beam 2.tscn" id="8_kad3k"]
 [ext_resource type="PackedScene" uid="uid://cyia7ossa0y82" path="res://scene/enemies/Goblin scout.tscn" id="9_ot8i3"]
+[ext_resource type="Script" path="res://scene/Test level/Spawner1.cs" id="13_pjr01"]
 
 [sub_resource type="CSharpScript" id="CSharpScript_cs1u7"]
 script/source = "using Godot;
@@ -170,7 +170,7 @@ color = Color(0.140859, 0.219519, 0.243691, 1)
 [node name="Decorations" type="StaticBody2D" parent="."]
 
 [node name="Lamp post 1" parent="Decorations" instance=ExtResource("3_bjdm4")]
-position = Vector2(1179, 580)
+position = Vector2(1178, 584)
 rotation = 0.0890118
 scale = Vector2(1.51, 1.655)
 
@@ -957,12 +957,9 @@ position = Vector2(3664, 387)
 scale = Vector2(4, 5.735)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("9_ot8i3")]
-position = Vector2(1333, 582)
-scale = Vector2(3, 3)
 
 [node name="Player" parent="." instance=ExtResource("4_myqvg")]
-position = Vector2(1103, 586)
-script = ExtResource("5_dy3qu")
+position = Vector2(833, 562)
 
 [node name="Camera2D2" type="Camera2D" parent="Player"]
 offset = Vector2(0, -120)
@@ -992,3 +989,11 @@ tile_set = ExtResource("6_okhbr")
 color = Color(1, 1, 0.905882, 1)
 energy = 0.67
 blend_mode = 1
+
+[node name="Spawner 1" type="Node2D" parent="."]
+position = Vector2(1917, 495)
+script = ExtResource("13_pjr01")
+enemyScenePath = null
+
+[node name="GoblinScout" parent="." instance=ExtResource("9_ot8i3")]
+position = Vector2(1007, 585)

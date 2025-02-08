@@ -3,9 +3,12 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	CollisionShape2D collision_shape;
+	
 	private const float Speed = 300.0f;
 	private const float JumpVelocity = -650.0f;
 	private const float Gravity = 1000f;
+	
 
 	private float direction = 0;
 	private float _lastDirection = -1;
@@ -13,6 +16,24 @@ public partial class Player : CharacterBody2D
 	private bool _isPunch = false;
 	private bool _isAirAttack = false;
 	private bool _isGroundAttack = false;
+
+	
+	
+	int healPointLevel = 1;
+	int shieldLevel = 1;
+	int damageLevel =  1;
+	
+	int healPoints = 55;
+	
+	int shieldPoints = 10;
+	
+	int damageMultiplier = 1;
+	int instantDamage = 0;
+	
+	
+	   [Export] private float _rayWidth = 10f;  // Ширина атаки
+	
+
 
 	[Export] private float _rayLength = 100f;
 	private AnimatedSprite2D _sprite;
@@ -39,6 +60,9 @@ public partial class Player : CharacterBody2D
 
 	public override void _Ready()
 	{
+		 collision_shape = GetNode<CollisionShape2D>("CollisionShape2D");
+		
+		
 		_sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_sprite.SpeedScale = _defaultSpeedScale;
 		_sprite.AnimationFinished += OnAnimationFinished;
@@ -128,7 +152,7 @@ public partial class Player : CharacterBody2D
 			{
 				_isPunch = true;
 			}
-			PerformRaycast();
+			Attack();
 		}
 
 		HandleAnimation();
@@ -247,14 +271,54 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	private void PerformRaycast()
+private void Attack()
+{
+	if (collision_shape == null)
+		return;
+
+	// Начальная точка атаки
+	Vector2 start = collision_shape.GlobalPosition;
+
+	// Смещение вперёд в сторону взгляда (необходимо для определения направления)
+	Vector2 offset = new Vector2(_lastDirection * (_rayLength / 2), 0);
+
+	// Создаём область атаки (прямоугольник размером 1000x1000 пикселей)
+	var shape = new RectangleShape2D();
+	shape.Size = new Vector2(1000, 1000);  // Устанавливаем площадь удара 1000x1000 пикселей
+
+	// Задаём параметры пересечения
+	var query = new PhysicsShapeQueryParameters2D();
+	query.SetShape(shape);
+	query.Transform = new Transform2D(0, start + offset);  // Сдвигаем область атаки по направлению
+	query.CollideWithBodies = true;  // Проверяем только тела
+
+	// Проверяем объекты в зоне атаки
+	var spaceState = GetWorld2D().DirectSpaceState;
+	Godot.Collections.Array<Godot.Collections.Dictionary> results = spaceState.IntersectShape(query);
+
+	foreach (var result in results)
 	{
-		Vector2 start = GlobalPosition;
-		Vector2 end = start + new Vector2(_lastDirection * _rayLength, 0);
-		var spaceState = GetWorld2D().DirectSpaceState;
-		var query = PhysicsRayQueryParameters2D.Create(start, end);
-		var result = spaceState.IntersectRay(query);
+		Node collider = (Node)result["collider"];
+GD.Print("Hit: " + collider.Name);
+		// Проверяем, что не атакуем сам себя
+		if (collider == this)
+			continue;
+
+		// Проверяем, является ли объект врагом (например, по имени или типу)
+		if (collider is GoblinScout)  // Или можно проверить по тегам/меткам
+		{
+			GD.Print("Hit: " + collider.Name);
+			collider.Call("OnHit", this, 0);
+		}
 	}
+}
+
+
+
+
+
+
+
 
 	private void OnAnimationFinished()
 	{

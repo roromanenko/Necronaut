@@ -1,5 +1,6 @@
-[gd_scene load_steps=60 format=3 uid="uid://bnwfrk70ha0xn"]
+[gd_scene load_steps=61 format=3 uid="uid://bnwfrk70ha0xn"]
 
+[ext_resource type="Script" path="res://scene/player/Player.cs" id="1_0it2r"]
 [ext_resource type="Texture2D" uid="uid://ipwd4l5ggns" path="res://assets/Character skin/male player white 1.png" id="1_b1w2l"]
 [ext_resource type="Texture2D" uid="uid://c4u4jme0kfihv" path="res://assets/Character skin/male player white 1 falling attack.png" id="2_gp4mn"]
 [ext_resource type="Texture2D" uid="uid://5nxxh5lffmnr" path="res://assets/textures of light/64x64.png" id="2_qye5i"]
@@ -429,6 +430,7 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(2, 2)
+script = ExtResource("1_0it2r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -22)
