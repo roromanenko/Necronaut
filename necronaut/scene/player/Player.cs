@@ -16,13 +16,16 @@ public partial class Player : CharacterBody2D
 	private bool _isPunch = false;
 	private bool _isAirAttack = false;
 	private bool _isGroundAttack = false;
+	
+	bool isDead = false;
 
+	
 	
 	int healPointLevel = 1;
 	int shieldLevel = 1;
 	int damageLevel =  1;
 	
-	int healPoints = 55;
+	int healPoints = 200;
 	
 	int shieldPoints = 10;
 	
@@ -30,7 +33,7 @@ public partial class Player : CharacterBody2D
 	int instantDamage = 0;
 	
 	
-	   [Export] private float _rayWidth = 10f;  // Ширина атаки
+	   [Export] private float _rayWidth = 10f;
 	
 
 
@@ -40,19 +43,19 @@ public partial class Player : CharacterBody2D
 	private MeleeWeapon _weapon;
 	private bool _wasOnFloor = true;
 
-	// Air attack parametrs
-	private float _airAttackStallTime = 0.2f;     // Время заморозки (секунд)
-	private float _airAttackTimer = 0f;           // Таймер заморозки
-	private float _diveSpeed = 2000f;             // Скорость устремления вниз после заморозки
-	private bool _hasStartedDive = false;         // Флаг, что фаза dive началась
-	private float _airAttackDeceleration = 2000f; // Скорость замедления (для плавного freeze)
+	
+	private float _airAttackStallTime = 0.2f;
+	private float _airAttackTimer = 0f;
+	private float _diveSpeed = 2000f;
+	private bool _hasStartedDive = false;
+	private float _airAttackDeceleration = 2000f;
 
-	// Animation speed parametrs
+	
 	private float _defaultSpeedScale = 1.5f;
 	private float _attackSpeedScale = 2.0f;
 	private float _groundAttackSpeedScale = 2.0f;
 
-	// Double jump parametrs
+	
 	[Export] private int maxJumps = 2;
 	[Export] private float doubleJumpMultiplier = 0.65f;
 	private int jumpsUsed = 0;
@@ -90,6 +93,7 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if(isDead) return;        
 		if (_isAirAttack && !IsOnFloor())
 		{
 			if (_airAttackTimer > 0)
@@ -270,54 +274,62 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-private void Attack()
-{
-	if (collision_shape == null)
-		return;
-
-	// Начальная точка атаки
-	Vector2 start = collision_shape.GlobalPosition;
-
-	// Смещение вперёд в сторону взгляда (необходимо для определения направления)
-	Vector2 offset = new Vector2(_lastDirection * (_rayLength / 2), 0);
-
-	// Создаём область атаки (прямоугольник размером 1000x1000 пикселей)
-	var shape = new RectangleShape2D();
-	shape.Size = new Vector2(1000, 1000);  // Устанавливаем площадь удара 1000x1000 пикселей
-
-	// Задаём параметры пересечения
-	var query = new PhysicsShapeQueryParameters2D();
-	query.SetShape(shape);
-	query.Transform = new Transform2D(0, start + offset);  // Сдвигаем область атаки по направлению
-	query.CollideWithBodies = true;  // Проверяем только тела
-
-	// Проверяем объекты в зоне атаки
-	var spaceState = GetWorld2D().DirectSpaceState;
-	Godot.Collections.Array<Godot.Collections.Dictionary> results = spaceState.IntersectShape(query);
-
-	foreach (var result in results)
+	private void Attack()
 	{
-		Node collider = (Node)result["collider"];
-GD.Print("Hit: " + collider.Name);
-		// Проверяем, что не атакуем сам себя
-		if (collider == this)
-			continue;
+		if (collision_shape == null)
+			return;
 
-		// Проверяем, является ли объект врагом (например, по имени или типу)
-		if (collider is GoblinScout)  // Или можно проверить по тегам/меткам
+		Vector2 start = collision_shape.GlobalPosition;
+		Vector2 offset = new Vector2(_lastDirection * (_rayLength / 2), 0);
+
+		var shape = collision_shape.Shape;  
+
+		PhysicsShapeQueryParameters2D query = new PhysicsShapeQueryParameters2D();
+		query.SetShape(shape);
+		query.Transform = new Transform2D(0, start + offset);
+		query.CollideWithBodies = true;
+
+		PhysicsDirectSpaceState2D spaceState = GetWorld2D().DirectSpaceState;
+		Godot.Collections.Array<Godot.Collections.Dictionary> results = spaceState.IntersectShape(query);
+
+		foreach (var result in results)
 		{
+			if (!result.ContainsKey("collider"))
+				continue;
+
+			Node2D collider = result["collider"].As<Node2D>();
+			if (collider == null)
+				continue;
+
 			GD.Print("Hit: " + collider.Name);
-			collider.Call("OnHit", this, 0);
+
+			if (collider == this)
+				continue;
+
+			GD.Print("Hit: " + collider.Name);
+			var parent = collider;
+			if (parent != null && parent.HasMethod("OnHit"))
+			{
+				GD.Print("Calling OnHit on parent...");
+				parent.Call("OnHit", 50);
+			}
+			else
+			{
+				GD.Print("No OnHit method found on parent.");
+			}
 		}
 	}
-}
 
+	public void OnHit(int damage)
+	{
+		healPoints -= damage;
 
-
-
-
-
-
+		if (healPoints <= 0)
+		{
+			_sprite.Play("death");
+			isDead = true;
+		}
+	}
 
 	private void OnAnimationFinished()
 	{
@@ -326,6 +338,10 @@ GD.Print("Hit: " + collider.Name);
 			_isPunch = false;
 			_isGroundAttack = false;
 			_sprite.SpeedScale = _defaultSpeedScale;
+		}
+		if(_sprite.Animation == "death")
+		{
+				CallDeferred("queue_free");
 		}
 	}
 }

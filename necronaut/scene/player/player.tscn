@@ -277,7 +277,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8ghqw")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -440,7 +440,7 @@ shape = SubResource("RectangleShape2D_nl11i")
 position = Vector2(0, -31.0735)
 scale = Vector2(0.923077, 0.971048)
 sprite_frames = SubResource("SpriteFrames_gue51")
-animation = &"ground attack"
+animation = &"death"
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(-0.5, -22)

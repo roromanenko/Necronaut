@@ -24,12 +24,23 @@ public partial class GoblinScout : CharacterBody2D
 	private bool isHit = false;
 	private bool isDead = false;
 	private bool isAttacking = false;
+	private bool isWaitAttack = false;
+	private Timer attackTimer;
+	
+	private float _lastDirection = 1f;
+	private float _rayLength = 50f; 
 
 	public override void _Ready()
 	{
 		collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		player = GetParent().GetNode<CharacterBody2D>("Player");
+		animatedSprite.AnimationFinished += OnAnimationFinished;
+
+		attackTimer = GetNode<Timer>("Timer");
+		attackTimer.WaitTime = 2f;
+		attackTimer.OneShot = true;
+		attackTimer.Timeout += OnAttackTimerTimeout;
 
 		if (player == null)
 		{
@@ -62,7 +73,7 @@ public partial class GoblinScout : CharacterBody2D
 		UpdateAnimation();
 		MoveAndSlide();
 
-		CheckForAttack();
+		if(!isWaitAttack)CheckForAttack();
 	}
 
 	private void FollowPlayer(Vector2 directionToPlayer, double delta)
@@ -74,6 +85,7 @@ public partial class GoblinScout : CharacterBody2D
 		{
 			isFacingLeft = !isFacingLeft;
 			animatedSprite.FlipH = isFacingLeft;
+			_lastDirection = isFacingLeft ? -1f : 1f;
 		}
 	}
 
@@ -86,9 +98,10 @@ public partial class GoblinScout : CharacterBody2D
 
 			isFacingLeft = !isFacingLeft;
 			animatedSprite.FlipH = isFacingLeft;
+			_lastDirection = isFacingLeft ? -1f : 1f;
 		}
 
-		Velocity = new Vector2(movementDirection.X * (movementSpeed/2), Velocity.Y);
+		Velocity = new Vector2(movementDirection.X * (movementSpeed / 2), Velocity.Y);
 	}
 
 	private void ApplyGravity(double delta)
@@ -130,7 +143,7 @@ public partial class GoblinScout : CharacterBody2D
 				isFacingLeft = !isFacingLeft;
 				animatedSprite.FlipH = isFacingLeft;
 			}
-			
+
 			animatedSprite.Play("walk");
 		}
 		else
@@ -151,19 +164,32 @@ public partial class GoblinScout : CharacterBody2D
 
 	private void StartAttack()
 	{
+		if(isHit) return;
 		isAttacking = true;
+		isWaitAttack = true;
 		animatedSprite.Play("attack");
 		Velocity = Vector2.Zero;
-
-		animatedSprite.Connect("animation_finished", new Callable(this, nameof(OnAttackAnimationFinished)));
 		Attack();
+		attackTimer.Start();
 	}
 
-	private void OnAttackAnimationFinished()
+	private void OnAnimationFinished()
 	{
-		isAttacking = false;
-		animatedSprite.Disconnect("animation_finished", new Callable(this, nameof(OnAttackAnimationFinished)));
-		UpdateAnimation();
+		if (animatedSprite.Animation == "hit")
+		{
+			isHit = false;
+			isAttacking = false;
+			UpdateAnimation();
+		}
+		else if (animatedSprite.Animation == "attack")
+		{
+			isAttacking = false;
+			UpdateAnimation();
+		}
+		else if (animatedSprite.Animation == "death")
+		{
+			CallDeferred("queue_free");
+		}
 	}
 
 	public void OnHit(int damage)
@@ -178,46 +204,57 @@ public partial class GoblinScout : CharacterBody2D
 		{
 			isDead = true;
 			animatedSprite.Play("death");
-			CallDeferred("queue_free");
 		}
-
-		GetNode<Timer>("HitTimer").Start();
-	}
-
-	public void OnHitAnimationFinished()
-	{
-		isHit = false;
 	}
 
 	private void Attack()
 	{
-		if (collisionShape == null) return;
+		if (collisionShape == null)
+			return;
 
 		Vector2 start = collisionShape.GlobalPosition;
-		Vector2 offset = new Vector2((movementDirection.X > 0 ? 1 : -1) * (1000 / 2), 0);
+		Vector2 offset = new Vector2(_lastDirection * (_rayLength / 2), 0);
 
-		var shape = new RectangleShape2D { Size = new Vector2(1000, 1000) };
-		var query = new PhysicsShapeQueryParameters2D
-		{
-			Shape = shape,
-			Transform = new Transform2D(0, start + offset),
-			CollideWithBodies = true
-		};
+		var shape = collisionShape.Shape;  
 
-		var spaceState = GetWorld2D().DirectSpaceState;
-		var results = spaceState.IntersectShape(query);
+		PhysicsShapeQueryParameters2D query = new PhysicsShapeQueryParameters2D();
+		query.SetShape(shape);
+		query.Transform = new Transform2D(0, start + offset);
+		query.CollideWithBodies = true;
+
+		PhysicsDirectSpaceState2D spaceState = GetWorld2D().DirectSpaceState;
+		Godot.Collections.Array<Godot.Collections.Dictionary> results = spaceState.IntersectShape(query);
 
 		foreach (var result in results)
 		{
-			Node collider = (Node)result["collider"];
+			if (!result.ContainsKey("collider"))
+				continue;
+
+			Node2D collider = result["collider"].As<Node2D>();
+			if (collider == null)
+				continue;
+
+			GD.Print("Hit: " + collider.Name);
+
 			if (collider == this)
 				continue;
 
-			if (collider is Player)
+			GD.Print("Hit: " + collider.Name);
+			var parent = collider;
+			if (parent != null && parent.HasMethod("OnHit"))
 			{
-				GD.Print("Hit: " + collider.Name);
-				collider.Call("OnHit", this, 0);
+				GD.Print("Calling OnHit on parent...");
+				parent.Call("OnHit", 50);
+			}
+			else
+			{
+				GD.Print("No OnHit method found on parent.");
 			}
 		}
+	}
+
+	private void OnAttackTimerTimeout()
+	{
+		isWaitAttack = false;
 	}
 }
