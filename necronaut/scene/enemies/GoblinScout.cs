@@ -221,4 +221,3 @@ public partial class GoblinScout : CharacterBody2D
 		}
 	}
 }
-ввф

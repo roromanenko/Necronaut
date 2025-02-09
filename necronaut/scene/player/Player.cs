@@ -18,7 +18,6 @@ public partial class Player : CharacterBody2D
 	private bool _isGroundAttack = false;
 
 	
-	
 	int healPointLevel = 1;
 	int shieldLevel = 1;
 	int damageLevel =  1;
