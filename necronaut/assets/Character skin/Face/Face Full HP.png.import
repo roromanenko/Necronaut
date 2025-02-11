@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwpqdef1vq6sx"
-path="res://.godot/imported/male player white 3.png-46725cc49df8bc22f577ffafa93876c2.ctex"
+uid="uid://bypi5v1gvkivp"
+path="res://.godot/imported/Face Full HP.png-334c720e4e588dce23415efaebc9d40d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Character skin/male player white 3.png"
-dest_files=["res://.godot/imported/male player white 3.png-46725cc49df8bc22f577ffafa93876c2.ctex"]
+source_file="res://assets/Character skin/Face/Face Full HP.png"
+dest_files=["res://.godot/imported/Face Full HP.png-334c720e4e588dce23415efaebc9d40d.ctex"]
 
 [params]
 

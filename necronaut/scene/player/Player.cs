@@ -7,7 +7,7 @@ public partial class Player : CharacterBody2D
 	Node2D weaponInstance;
 	
 	private const float Speed = 300.0f;
-	private const float JumpVelocity = -650.0f;
+	private const float JumpVelocity = -750.0f;
 	private const float Gravity = 1000f;
 	
 
@@ -57,8 +57,8 @@ public partial class Player : CharacterBody2D
 	private float _groundAttackSpeedScale = 2.0f;
 
 	
-	[Export] private int maxJumps = 2;
-	[Export] private float doubleJumpMultiplier = 0.65f;
+	[Export] private int maxJumps = 1;
+	[Export] private float doubleJumpMultiplier = 0.7f;
 	private int jumpsUsed = 0;
 
 	public override void _Ready()
@@ -70,7 +70,7 @@ public partial class Player : CharacterBody2D
 		_sprite.SpeedScale = _defaultSpeedScale;
 		_sprite.AnimationFinished += OnAnimationFinished;
 
-		PackedScene weaponScene = ResourceLoader.Load<PackedScene>("res://scene/weapons/Magic Sword.tscn");
+		PackedScene weaponScene = ResourceLoader.Load<PackedScene>("res://scene/weapons/Iron Axe.tscn");
 		if (weaponScene == null)
 		{
 			GD.PrintErr("res://scene/weapons/Magic Sword.tscn");
@@ -134,7 +134,7 @@ public partial class Player : CharacterBody2D
 		}
 
 		ApplyGravity(delta);
-		HandleMovement();
+		HandleMovement(delta);
 		HandleJump();
 
 		if (IsOnFloor() && _isPunch && !_isAirAttack)
@@ -168,11 +168,11 @@ public partial class Player : CharacterBody2D
 			Velocity += new Vector2(0, Gravity * (float)delta);
 	}
 
-	private void HandleMovement()
+	private void HandleMovement(double delta)
 	{
 		Vector2 velocity = Velocity;
 		if (!IsOnFloor())
-			velocity.Y += Gravity * (float)GetProcessDeltaTime();
+			velocity.Y += Gravity * (float)delta;
 
 		direction = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");
 		if (direction != 0)

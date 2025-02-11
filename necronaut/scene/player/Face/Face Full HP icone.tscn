@@ -1,0 +1,93 @@
+[gd_scene load_steps=13 format=3 uid="uid://d3g5ll7gmqgkm"]
+
+[ext_resource type="Texture2D" uid="uid://bypi5v1gvkivp" path="res://assets/Character skin/Face/Face Full HP.png" id="1_hh153"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f68ts"]
+atlas = ExtResource("1_hh153")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84b50"]
+atlas = ExtResource("1_hh153")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tr5w8"]
+atlas = ExtResource("1_hh153")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdlrg"]
+atlas = ExtResource("1_hh153")
+region = Rect2(1024, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0go2"]
+atlas = ExtResource("1_hh153")
+region = Rect2(1152, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ruuj4"]
+atlas = ExtResource("1_hh153")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o14au"]
+atlas = ExtResource("1_hh153")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_614pa"]
+atlas = ExtResource("1_hh153")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tl8pk"]
+atlas = ExtResource("1_hh153")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0i712"]
+atlas = ExtResource("1_hh153")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hqfnd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f68ts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84b50")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tr5w8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdlrg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0go2")
+}],
+"loop": true,
+"name": &"damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ruuj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o14au")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_614pa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tl8pk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0i712")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="FaceFullHpIcone" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hqfnd")
+animation = &"idle"
+frame_progress = 0.846315

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4u4jme0kfihv"
-path="res://.godot/imported/male player white 1 falling attack.png-f51b8cccec4621d0b64eaf58dc95727d.ctex"
+uid="uid://k04odnb3c2e"
+path="res://.godot/imported/male player 1.png-606bf966ea6c573cac6d599c95ab248c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Character skin/male player white 1 falling attack.png"
-dest_files=["res://.godot/imported/male player white 1 falling attack.png-f51b8cccec4621d0b64eaf58dc95727d.ctex"]
+source_file="res://assets/Character skin/male player 1.png"
+dest_files=["res://.godot/imported/male player 1.png-606bf966ea6c573cac6d599c95ab248c.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vxbqw0w45yc3"
-path="res://.godot/imported/male player black 2.png-33f9309b788e8bfa68ceea4f1e9b5203.ctex"
+uid="uid://chfgfakct5u4i"
+path="res://.godot/imported/Face Half HP.png-2251b17a0ab973aededf6a10a680a690.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Character skin/male player black 2.png"
-dest_files=["res://.godot/imported/male player black 2.png-33f9309b788e8bfa68ceea4f1e9b5203.ctex"]
+source_file="res://assets/Character skin/Face/Face Half HP.png"
+dest_files=["res://.godot/imported/Face Half HP.png-2251b17a0ab973aededf6a10a680a690.ctex"]
 
 [params]
 

@@ -1,0 +1,92 @@
+[gd_scene load_steps=13 format=3 uid="uid://cfd56ly3nfqnt"]
+
+[ext_resource type="Texture2D" uid="uid://dqobhixkapfr7" path="res://assets/Character skin/Face/Face Low Damage.png" id="1_h2cju"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0y1g4"]
+atlas = ExtResource("1_h2cju")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1af67"]
+atlas = ExtResource("1_h2cju")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rwdyp"]
+atlas = ExtResource("1_h2cju")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqk4k"]
+atlas = ExtResource("1_h2cju")
+region = Rect2(1024, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_akln0"]
+atlas = ExtResource("1_h2cju")
+region = Rect2(1152, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhjh3"]
+atlas = ExtResource("1_h2cju")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_so4ti"]
+atlas = ExtResource("1_h2cju")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_maxt2"]
+atlas = ExtResource("1_h2cju")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6rp1"]
+atlas = ExtResource("1_h2cju")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvicb"]
+atlas = ExtResource("1_h2cju")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lkoem"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0y1g4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1af67")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwdyp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eqk4k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_akln0")
+}],
+"loop": true,
+"name": &"damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhjh3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_so4ti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_maxt2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6rp1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wvicb")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="FaceLowDamageIcone" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lkoem")
+animation = &"damage"

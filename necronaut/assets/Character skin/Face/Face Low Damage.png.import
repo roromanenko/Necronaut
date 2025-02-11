@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ipwd4l5ggns"
-path="res://.godot/imported/male player white 1.png-d60916fc52b5a00dac50d56fde48e23b.ctex"
+uid="uid://dqobhixkapfr7"
+path="res://.godot/imported/Face Low Damage.png-cb862eb11462e035c5ad67c0fee744a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Character skin/male player white 1.png"
-dest_files=["res://.godot/imported/male player white 1.png-d60916fc52b5a00dac50d56fde48e23b.ctex"]
+source_file="res://assets/Character skin/Face/Face Low Damage.png"
+dest_files=["res://.godot/imported/Face Low Damage.png-cb862eb11462e035c5ad67c0fee744a6.ctex"]
 
 [params]
 

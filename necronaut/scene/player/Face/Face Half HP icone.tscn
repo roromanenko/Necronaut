@@ -1,0 +1,92 @@
+[gd_scene load_steps=13 format=3 uid="uid://c5ro1w2v8v4r2"]
+
+[ext_resource type="Texture2D" uid="uid://chfgfakct5u4i" path="res://assets/Character skin/Face/Face Half HP.png" id="1_jon4i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uftwu"]
+atlas = ExtResource("1_jon4i")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yw25e"]
+atlas = ExtResource("1_jon4i")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvoqk"]
+atlas = ExtResource("1_jon4i")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywxc8"]
+atlas = ExtResource("1_jon4i")
+region = Rect2(1024, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5s12j"]
+atlas = ExtResource("1_jon4i")
+region = Rect2(1152, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_boxbw"]
+atlas = ExtResource("1_jon4i")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvwm2"]
+atlas = ExtResource("1_jon4i")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypgis"]
+atlas = ExtResource("1_jon4i")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ba7g2"]
+atlas = ExtResource("1_jon4i")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5jcd"]
+atlas = ExtResource("1_jon4i")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fdudj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uftwu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yw25e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvoqk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywxc8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5s12j")
+}],
+"loop": true,
+"name": &"damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_boxbw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvwm2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypgis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ba7g2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5jcd")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="FaceHalfHpIcone" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fdudj")
+animation = &"damage"

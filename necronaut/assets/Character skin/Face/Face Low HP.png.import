@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://o58k78vys3gn"
-path="res://.godot/imported/male player white 1 ground attack.png-b025f66b788eecf7fb26439b8ca21798.ctex"
+uid="uid://cw47hn8cu1ivq"
+path="res://.godot/imported/Face Low HP.png-a31d4cd9927439a3d7097a7914e95d89.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Character skin/male player white 1 ground attack.png"
-dest_files=["res://.godot/imported/male player white 1 ground attack.png-b025f66b788eecf7fb26439b8ca21798.ctex"]
+source_file="res://assets/Character skin/Face/Face Low HP.png"
+dest_files=["res://.godot/imported/Face Low HP.png-a31d4cd9927439a3d7097a7914e95d89.ctex"]
 
 [params]
 
