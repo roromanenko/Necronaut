@@ -38,8 +38,6 @@ public partial class GoblinScout : CharacterBody2D
 		animatedSprite.AnimationFinished += OnAnimationFinished;
 
 		attackTimer = GetNode<Timer>("Timer");
-		attackTimer.WaitTime = 2f;
-		attackTimer.OneShot = true;
 		attackTimer.Timeout += OnAttackTimerTimeout;
 
 		if (player == null)

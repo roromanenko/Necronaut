@@ -4,6 +4,7 @@ using System;
 public partial class Player : CharacterBody2D
 {
 	CollisionShape2D collision_shape;
+	Node2D weaponInstance;
 	
 	private const float Speed = 300.0f;
 	private const float JumpVelocity = -650.0f;
@@ -76,7 +77,7 @@ public partial class Player : CharacterBody2D
 		}
 		else
 		{
-			Node2D weaponInstance = (Node2D)weaponScene.Instantiate();
+			 weaponInstance = (Node2D)weaponScene.Instantiate();
 			Node2D weaponSocket = GetNode<Node2D>("WeaponSocket");
 			if (weaponSocket == null)
 			{
@@ -327,6 +328,7 @@ public partial class Player : CharacterBody2D
 		if (healPoints <= 0)
 		{
 			_sprite.Play("death");
+			weaponInstance.CallDeferred("queue_free");
 			isDead = true;
 		}
 	}

@@ -386,3 +386,7 @@ texture_scale = 0.66
 
 [node name="GoblinScout" type="Node2D" parent="."]
 position = Vector2(-302, 631)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
