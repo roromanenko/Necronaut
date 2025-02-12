@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://bftimluj4gth1"]
+[gd_scene load_steps=16 format=4 uid="uid://bftimluj4gth1"]
 
 [ext_resource type="PackedScene" uid="uid://1v5juqred31s" path="res://BG Forest1.tscn" id="2_5phxk"]
 [ext_resource type="PackedScene" uid="uid://byaeiq58lls2y" path="res://scene/decoration/Lamp post.tscn" id="3_bjdm4"]
@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://dau47c2k1i4o1" path="res://scene/decoration/Beam 2.tscn" id="8_kad3k"]
 [ext_resource type="PackedScene" uid="uid://cyia7ossa0y82" path="res://scene/enemies/Goblin scout.tscn" id="9_ot8i3"]
 [ext_resource type="Script" path="res://scene/Test level/Spawner1.cs" id="13_pjr01"]
+[ext_resource type="PackedScene" uid="uid://d3g5ll7gmqgkm" path="res://scene/player/Face/Face Full HP icone.tscn" id="14_h32vo"]
+[ext_resource type="PackedScene" uid="uid://dqk8nx8xch636" path="res://resources/interface/bar/LifeBar.tscn" id="14_k00ic"]
 
 [sub_resource type="CSharpScript" id="CSharpScript_cs1u7"]
 script/source = "using Godot;
@@ -159,9 +161,9 @@ MinPlatformLength = null
 MaxPlatformLength = null
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("2_5phxk")]
-offset = Vector2(0, -3700)
+offset = Vector2(0, -1827)
 scale = Vector2(4, 4)
-transform = Transform2D(4, 0, 0, 4, 0, -3700)
+transform = Transform2D(4, 0, 0, 4, 0, -1827)
 scroll_base_scale = Vector2(0.15, 0.15)
 
 [node name="CanvasModulate2" type="CanvasModulate" parent="ParallaxBackground"]
@@ -956,17 +958,8 @@ scale = Vector2(4.855, 6.884)
 position = Vector2(3664, 387)
 scale = Vector2(4, 5.735)
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("9_ot8i3")]
-
 [node name="Player" parent="." instance=ExtResource("4_myqvg")]
 position = Vector2(835, 580)
-
-[node name="Camera2D2" type="Camera2D" parent="Player"]
-offset = Vector2(0, -120)
-zoom = Vector2(2, 2)
-position_smoothing_enabled = true
-position_smoothing_speed = 7.0
-drag_horizontal_enabled = true
 
 [node name="Animated plants 1" type="TileMapLayer" parent="."]
 position = Vector2(0, 19.645)
@@ -997,3 +990,16 @@ enemyScenePath = null
 
 [node name="GoblinScout" parent="." instance=ExtResource("9_ot8i3")]
 position = Vector2(1007, 585)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="FaceFullHpIcone" parent="CanvasLayer" instance=ExtResource("14_h32vo")]
+position = Vector2(1081, 72)
+scale = Vector2(0.75, 0.75)
+
+[node name="Bar" parent="CanvasLayer" instance=ExtResource("14_k00ic")]
+offset_left = 885.0
+offset_top = 23.0
+offset_right = 1112.0
+offset_bottom = 53.0
+scale = Vector2(0.55, 0.55)

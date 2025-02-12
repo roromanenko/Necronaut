@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqk8nx8xch636"]
+
+[ext_resource type="Texture2D" uid="uid://baju3s0623abq" path="res://assets/UI/interface/hp bar/Under.png" id="1_34tuj"]
+[ext_resource type="PackedScene" uid="uid://dp71nsvp3aydg" path="res://resources/interface/counter/counter_template.tscn" id="1_g0xix"]
+[ext_resource type="Texture2D" uid="uid://cfuhy0ymirs3n" path="res://assets/UI/interface/hp bar/Progress.png" id="2_7dssw"]
+
+[node name="Bar" type="HBoxContainer"]
+offset_right = 232.0
+offset_bottom = 30.0
+
+[node name="Counter" parent="." instance=ExtResource("1_g0xix")]
+custom_minimum_size = Vector2(95, 0)
+layout_mode = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 2
+value = 85.0
+texture_under = ExtResource("1_34tuj")
+texture_progress = ExtResource("2_7dssw")

@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://chijaq0noh5hb"]
+[gd_scene load_steps=14 format=3 uid="uid://chijaq0noh5hb"]
 
 [ext_resource type="Texture2D" uid="uid://cw47hn8cu1ivq" path="res://assets/Character skin/Face/Face Low HP.png" id="1_ehqno"]
+[ext_resource type="Texture2D" path="res://assets/UI/Face icone.png" id="2_hxaos"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jsn77"]
 atlas = ExtResource("1_ehqno")
@@ -90,4 +91,9 @@ animations = [{
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xfi1j")
 animation = &"idle"
-frame_progress = 0.900395
+frame_progress = 0.486938
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(1.14, 1.14)
+texture = ExtResource("2_hxaos")

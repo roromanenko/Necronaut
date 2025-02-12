@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp71nsvp3aydg"]
+
+[ext_resource type="Texture2D" uid="uid://dj55s8ohcywfw" path="res://assets/UI/interface/counter/Label_BG.png" id="1_svnaj"]
+[ext_resource type="Texture2D" uid="uid://dh5gu121c4luf" path="res://assets/UI/interface/hp bar/HP icone.png" id="2_1soc7"]
+[ext_resource type="Theme" uid="uid://ccgjfqhgglr7d" path="res://resources/interface/theme/default_theme.tres" id="3_duk2j"]
+
+[node name="NinePatchRect" type="NinePatchRect"]
+offset_right = 109.0
+offset_bottom = 30.0
+texture = ExtResource("1_svnaj")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -27.0
+offset_right = 8.0
+offset_bottom = 37.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("2_1soc7")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = -11.0
+offset_right = 49.0
+offset_bottom = 15.0
+grow_vertical = 2
+theme = ExtResource("3_duk2j")
+text = "85"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true

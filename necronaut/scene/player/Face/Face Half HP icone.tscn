@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://c5ro1w2v8v4r2"]
+[gd_scene load_steps=14 format=3 uid="uid://c5ro1w2v8v4r2"]
 
 [ext_resource type="Texture2D" uid="uid://chfgfakct5u4i" path="res://assets/Character skin/Face/Face Half HP.png" id="1_jon4i"]
+[ext_resource type="Texture2D" path="res://assets/UI/Face icone.png" id="2_hr1bm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uftwu"]
 atlas = ExtResource("1_jon4i")
@@ -90,3 +91,8 @@ animations = [{
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fdudj")
 animation = &"damage"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(1.14, 1.14)
+texture = ExtResource("2_hr1bm")
