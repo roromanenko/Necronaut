@@ -34,7 +34,7 @@ public partial class GoblinScout : CharacterBody2D
 	{
 		collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		player = GetParent().GetNode<CharacterBody2D>("Player");
+		player = GetParent().GetParent().GetNode<CharacterBody2D>("Player");
 		animatedSprite.AnimationFinished += OnAnimationFinished;
 
 		attackTimer = GetNode<Timer>("Timer");

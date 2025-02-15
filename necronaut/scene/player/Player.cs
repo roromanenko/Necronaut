@@ -135,7 +135,7 @@ public partial class Player : CharacterBody2D
 
 		ApplyGravity(delta);
 		HandleMovement(delta);
-		HandleJump();
+		if(!_isAirAttack)HandleJump();
 
 		if (IsOnFloor() && _isPunch && !_isAirAttack)
 		{
@@ -156,7 +156,7 @@ public partial class Player : CharacterBody2D
 			{
 				_isPunch = true;
 			}
-			Attack();
+			//Attack();
 		}
 
 		HandleAnimation();
@@ -320,6 +320,51 @@ public partial class Player : CharacterBody2D
 			}
 		}
 	}
+private void AirAttack()
+{
+	if (collision_shape == null)
+		return;
+
+	var circleShape = new CircleShape2D();
+	circleShape.Radius = 50;
+
+	// Центрируем область в позиции персонажа.
+	Vector2 attackCenter = collision_shape.GlobalPosition;
+
+	PhysicsShapeQueryParameters2D query = new PhysicsShapeQueryParameters2D();
+	query.SetShape(circleShape);
+	query.Transform = new Transform2D(0, attackCenter);
+	query.CollideWithBodies = true;
+
+	PhysicsDirectSpaceState2D spaceState = GetWorld2D().DirectSpaceState;
+	var results = spaceState.IntersectShape(query);
+
+	foreach (var result in results)
+	{
+		if (!result.ContainsKey("collider"))
+			continue;
+
+		Node2D collider = result["collider"].As<Node2D>();
+		if (collider == null)
+			continue;
+
+		GD.Print("Hit: " + collider.Name);
+
+		if (collider == this)
+			continue;
+
+		if (collider.HasMethod("OnHit"))
+		{
+			GD.Print("Calling OnHit on " + collider.Name);
+			collider.Call("OnHit", 50);
+		}
+		else
+		{
+			GD.Print("No OnHit method found on " + collider.Name);
+		}
+	}
+}
+
 
 	public void OnHit(int damage)
 	{
@@ -335,11 +380,19 @@ public partial class Player : CharacterBody2D
 
 	private void OnAnimationFinished()
 	{
-		if (_sprite.Animation == "attack" || _sprite.Animation == "ground attack")
+		if (_sprite.Animation == "attack")
 		{
 			_isPunch = false;
 			_isGroundAttack = false;
 			_sprite.SpeedScale = _defaultSpeedScale;
+			Attack();
+		}
+		else if(_sprite.Animation == "ground attack")
+		{
+			_isPunch = false;
+			_isGroundAttack = false;
+			_sprite.SpeedScale = _defaultSpeedScale;
+			AirAttack();
 		}
 		if(_sprite.Animation == "death")
 		{
