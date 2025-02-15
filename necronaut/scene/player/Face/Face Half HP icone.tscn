@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://c5ro1w2v8v4r2"]
 
 [ext_resource type="Texture2D" uid="uid://chfgfakct5u4i" path="res://assets/Character skin/Face/Face Half HP.png" id="1_jon4i"]
-[ext_resource type="Texture2D" path="res://assets/UI/Face icone.png" id="2_hr1bm"]
+[ext_resource type="Texture2D" uid="uid://co6unn1cqewgy" path="res://assets/UI/interface/Face icone.png" id="2_4765a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uftwu"]
 atlas = ExtResource("1_jon4i")
@@ -95,4 +95,4 @@ animation = &"damage"
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1, 0)
 scale = Vector2(1.14, 1.14)
-texture = ExtResource("2_hr1bm")
+texture = ExtResource("2_4765a")

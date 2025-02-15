@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://chijaq0noh5hb"]
 
 [ext_resource type="Texture2D" uid="uid://cw47hn8cu1ivq" path="res://assets/Character skin/Face/Face Low HP.png" id="1_ehqno"]
-[ext_resource type="Texture2D" path="res://assets/UI/Face icone.png" id="2_hxaos"]
+[ext_resource type="Texture2D" uid="uid://co6unn1cqewgy" path="res://assets/UI/interface/Face icone.png" id="2_hxaos"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jsn77"]
 atlas = ExtResource("1_ehqno")

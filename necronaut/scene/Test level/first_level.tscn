@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cyia7ossa0y82" path="res://scene/enemies/Goblin scout.tscn" id="9_ot8i3"]
 [ext_resource type="Script" path="res://scene/Test level/Spawner1.cs" id="13_pjr01"]
 [ext_resource type="PackedScene" uid="uid://d3g5ll7gmqgkm" path="res://scene/player/Face/Face Full HP icone.tscn" id="14_h32vo"]
-[ext_resource type="PackedScene" uid="uid://dqk8nx8xch636" path="res://resources/interface/bar/LifeBar.tscn" id="14_k00ic"]
+[ext_resource type="PackedScene" uid="uid://dqk8nx8xch636" path="res://scene/interface/bar/LifeBar.tscn" id="14_k00ic"]
 
 [sub_resource type="CSharpScript" id="CSharpScript_cs1u7"]
 script/source = "using Godot;
@@ -994,12 +994,12 @@ position = Vector2(1007, 585)
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="FaceFullHpIcone" parent="CanvasLayer" instance=ExtResource("14_h32vo")]
-position = Vector2(1081, 72)
-scale = Vector2(0.75, 0.75)
+position = Vector2(1089, 64)
+scale = Vector2(0.65, 0.65)
 
 [node name="Bar" parent="CanvasLayer" instance=ExtResource("14_k00ic")]
-offset_left = 885.0
-offset_top = 23.0
-offset_right = 1112.0
-offset_bottom = 53.0
-scale = Vector2(0.55, 0.55)
+offset_left = 912.0
+offset_top = 22.0
+offset_right = 1139.0
+offset_bottom = 52.0
+scale = Vector2(0.5, 0.5)

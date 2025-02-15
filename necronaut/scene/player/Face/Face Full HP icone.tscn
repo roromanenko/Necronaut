@@ -92,7 +92,7 @@ animations = [{
 position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_hqfnd")
 animation = &"idle"
-frame_progress = 0.577316
+frame_progress = 0.836211
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.14, 1.14)
