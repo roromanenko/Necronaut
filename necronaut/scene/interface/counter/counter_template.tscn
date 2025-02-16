@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dp71nsvp3aydg"]
+[gd_scene load_steps=5 format=3 uid="uid://dp71nsvp3aydg"]
 
 [ext_resource type="Texture2D" uid="uid://dj55s8ohcywfw" path="res://assets/UI/interface/counter/Label_BG.png" id="1_svnaj"]
 [ext_resource type="Texture2D" uid="uid://dh5gu121c4luf" path="res://assets/UI/interface/hp bar/HP icone.png" id="2_1soc7"]
+[ext_resource type="Script" path="res://scene/interface/counter/CounterTemplate.cs" id="2_ovhnh"]
 [ext_resource type="Theme" uid="uid://ccgjfqhgglr7d" path="res://scene/interface/theme/default_theme.tres" id="3_duk2j"]
 
 [node name="CounterTemplate" type="NinePatchRect"]
@@ -12,6 +13,7 @@ patch_margin_left = 8
 patch_margin_top = 8
 patch_margin_right = 8
 patch_margin_bottom = 8
+script = ExtResource("2_ovhnh")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
