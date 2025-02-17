@@ -69,6 +69,7 @@ public partial class GoblinScout : Enemy
 		if (healPoints <= 0)
 		{
 			isDead = true;
+			GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);
 			animatedSprite.Play("death");
 		}
 	}

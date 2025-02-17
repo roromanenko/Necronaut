@@ -31,7 +31,8 @@ public partial class Player : CharacterBody2D
 	int instantDamage = 0;
 
 	[Export] private float _rayWidth = 10f;
-	[Export] private float _rayLength = 100f;
+	[Export] private float _rayLength = 50f;
+
 
 	private AnimatedSprite2D _sprite;
 	private MeleeWeapon _weapon;
@@ -83,6 +84,12 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
+public override void _Process(double delta)
+{
+		ProcessAnimation();
+}
+
+
 public override void _PhysicsProcess(double delta)
 {
 	if (isDead)
@@ -108,11 +115,8 @@ public override void _PhysicsProcess(double delta)
 	}
 
 	MoveAndSlide();
-
-	// Обработка ввода атаки и анимации выполняется всегда,
-	// чтобы переключать состояния атаки и корректно проигрывать анимации.
 	ProcessAttackInput();
-	ProcessAnimation();
+
 }
 
 
@@ -190,6 +194,7 @@ public override void _PhysicsProcess(double delta)
 			{
 				_isPunch = true;
 			}
+
 		}
 	}
 
@@ -268,6 +273,7 @@ public override void _PhysicsProcess(double delta)
 			if (Mathf.Abs(Velocity.X) > 0.1f)
 			{
 				_isPunch = false;
+				_sprite.SpeedScale = _defaultSpeedScale;
 				_sprite.Play("run");
 				_weapon?.PlayRunAnimation();
 			}
@@ -287,6 +293,7 @@ public override void _PhysicsProcess(double delta)
 			}
 			else
 			{
+				_sprite.SpeedScale = _defaultSpeedScale;
 				_sprite.Play("idle");
 				_weapon?.PlayIdleAnimation();
 			}
@@ -300,7 +307,7 @@ public override void _PhysicsProcess(double delta)
 			return;
 
 		Vector2 start = collision_shape.GlobalPosition;
-		Vector2 offset = new Vector2(_lastDirection * (_rayLength / 2), 0);
+		Vector2 offset = new Vector2(_lastDirection * _rayLength , 0);
 
 		var shape = collision_shape.Shape;
 		PhysicsShapeQueryParameters2D query = new PhysicsShapeQueryParameters2D();
@@ -333,7 +340,6 @@ public override void _PhysicsProcess(double delta)
 		}
 	}
 
-	// Функция выполнения воздушной атаки при приземлении
 	private void ExecuteAirAttack()
 	{
 		if (collision_shape == null)
@@ -342,7 +348,6 @@ public override void _PhysicsProcess(double delta)
 	var circleShape = new CircleShape2D();
 	circleShape.Radius = 50;
 
-	// Центрируем область в позиции персонажа.
 	Vector2 attackCenter = collision_shape.GlobalPosition;
 
 	PhysicsShapeQueryParameters2D query = new PhysicsShapeQueryParameters2D();

@@ -41,6 +41,7 @@ public partial class MeleeWeapon : Node2D
 	{
 		if (_sprite != null)
 		{
+			_sprite.SpeedScale = _defaultSpeedScale;
 			_sprite.Play("run");
 		}
 	}
@@ -49,6 +50,7 @@ public partial class MeleeWeapon : Node2D
 	{
 		if (_sprite != null)
 		{
+			_sprite.SpeedScale = _defaultSpeedScale;
 			_sprite.Play("jump");
 		}
 	}
@@ -57,6 +59,7 @@ public partial class MeleeWeapon : Node2D
 	{
 		if (_sprite != null)
 		{
+			_sprite.SpeedScale = _defaultSpeedScale;
 			_sprite.Play("fall");
 		}
 	}
