@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=60 format=3 uid="uid://cetctps64jijj"]
+[gd_resource type="TileSet" load_steps=61 format=3 uid="uid://cetctps64jijj"]
 
 [ext_resource type="Texture2D" uid="uid://bwsnfrdjanfx" path="res://assets/tileset/Mossy - TileSet.png" id="1_e7gna"]
 [ext_resource type="Texture2D" uid="uid://jbwb6bhtgid8" path="res://assets/tileset/Plant Animations/Plant 1.tres" id="2_nxura"]
@@ -665,8 +665,8 @@ use_texture_padding = false
 0:0/0 = 0
 0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_h4hwh")
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_6axu0"]
-polygon = PackedVector2Array(256, 256, -256, 256, 0, 0)
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_3inyf"]
+polygon = PackedVector2Array(-3, -56, -119, 216, 121, 220)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bfrqd"]
 texture = ExtResource("3_b2i4o")
@@ -674,13 +674,17 @@ margins = Vector2i(35, 0)
 texture_region_size = Vector2i(437, 422)
 use_texture_padding = false
 0:0/0 = 0
-0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_6axu0")
+0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_3inyf")
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_llou6"]
+polygon = PackedVector2Array(-3, -56, -119, 216, 121, 220)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6wuh8"]
 texture = ExtResource("4_71p56")
 texture_region_size = Vector2i(512, 437)
 use_texture_padding = false
 0:0/0 = 0
+0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_llou6")
 
 [resource]
 tile_size = Vector2i(512, 512)
