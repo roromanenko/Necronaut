@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Necronaut"
-run/main_scene="res://scene/Test level/first_level.tscn"
+run/main_scene="res://scene/interface/menu/main_menu.tscn"
 config/features=PackedStringArray("4.3", "C#", "Mobile")
 config/icon="res://icon.svg"
 

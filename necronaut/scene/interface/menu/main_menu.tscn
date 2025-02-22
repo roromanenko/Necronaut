@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6eysqap4614r"]
+
+[ext_resource type="Theme" uid="uid://ccgjfqhgglr7d" path="res://scene/interface/theme/default_theme.tres" id="1_k7eu4"]
+[ext_resource type="Script" path="res://scene/interface/menu/MainMenu.cs" id="1_vmiyt"]
+[ext_resource type="PackedScene" uid="uid://1v5juqred31s" path="res://BG Forest1.tscn" id="3_d437k"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_k7eu4")
+script = ExtResource("1_vmiyt")
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("3_d437k")]
+scroll_ignore_camera_zoom = true
+
+[node name="ButtonsList" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -116.0
+offset_right = 143.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="NewGameButton" type="Button" parent="ButtonsList"]
+layout_mode = 2
+text = "New Game"
+
+[node name="QuitButton" type="Button" parent="ButtonsList"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="ButtonsList/NewGameButton" to="." method="OnNewGameButtonPressed"]
+[connection signal="pressed" from="ButtonsList/QuitButton" to="." method="OnQuitButtonPressed"]
