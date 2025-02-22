@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://bftimluj4gth1"]
+[gd_scene load_steps=16 format=4 uid="uid://bftimluj4gth1"]
 
 [ext_resource type="PackedScene" uid="uid://1v5juqred31s" path="res://BG Forest1.tscn" id="2_5phxk"]
 [ext_resource type="PackedScene" uid="uid://byaeiq58lls2y" path="res://scene/decoration/Lamp post.tscn" id="3_bjdm4"]
@@ -16,150 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://dqk8nx8xch636" path="res://scene/interface/bar/LifeBar.tscn" id="14_k00ic"]
 [ext_resource type="PackedScene" uid="uid://capsp7au2bvs5" path="res://scene/Spawner/spawner.tscn" id="15_8y7rl"]
 
-[sub_resource type="CSharpScript" id="CSharpScript_cs1u7"]
-script/source = "using Godot;
-using System;
-
-public partial class LevelGenerator : Node2D
-{
-	[Export] public int LevelWidth = 50;
-	[Export] public int LevelHeight = 30;
-
-	// Тайлы
-	[Export] public int GroundTileID = 1;
-	[Export] public int EmptyTileID = -1;
-
-	// Количество платформ, которые хотим разместить
-	[Export] public int PlatformCount = 6;
-
-	// Минимальная и максимальная длина платформы
-	[Export] public int MinPlatformLength = 4;
-	[Export] public int MaxPlatformLength = 10;
-
-	// Двумерный массив уровня
-	private int[,] levelGrid;
-
-	// TileMapLayer (Godot 4)
-	private TileMapLayer tileMapLayer;
-
-	public override void _Ready()
-	{
-		tileMapLayer = GetNode<TileMapLayer>(\"TileMapLayer\");
-		if (tileMapLayer == null)
-		{
-			GD.PrintErr(\"TileMapLayer не найден!\");
-			return;
-		}
-
-		GenerateLevel();
-	}
-
-	private void GenerateLevel()
-	{
-		// Инициализируем массив пустотой
-		levelGrid = new int[LevelWidth, LevelHeight];
-		for (int x = 0; x < LevelWidth; x++)
-		{
-			for (int y = 0; y < LevelHeight; y++)
-			{
-				levelGrid[x, y] = EmptyTileID;
-			}
-		}
-
-		// 1) Создаём нижний пол
-		for (int x = 0; x < LevelWidth; x++)
-		{
-			levelGrid[x, LevelHeight - 1] = GroundTileID;
-		}
-
-		// 2) Случайно размещаем несколько горизонтальных платформ на разных высотах
-		PlacePlatforms();
-
-		// 3) (Опционально) Добавляем \"дыры\" в платформах,
-		//    чтобы получалось больше разнообразия
-		AddHolesToPlatforms();
-
-		// 4) Отрисовываем результат
-		RenderLevel();
-	}
-
-	/// <summary>
-	/// Случайно размещаем платформы.
-	/// Для каждой платформы:
-	///  - Случайно выбираем высоту (от 1 до Height-2, чтобы не затирать нижний пол).
-	///  - Случайно выбираем длину (от MinPlatformLength до MaxPlatformLength).
-	///  - Случайно выбираем позицию по X (учитывая, чтобы не вылезать за границы).
-	/// </summary>
-	private void PlacePlatforms()
-	{
-		Random rand = new Random();
-		for (int i = 0; i < PlatformCount; i++)
-		{
-			int platformLength = rand.Next(MinPlatformLength, MaxPlatformLength + 1);
-			int y = rand.Next(1, LevelHeight - 1); // высота, 1 чтобы не в самом верху, -1 чтобы не перезаписывать пол
-			int x = rand.Next(0, LevelWidth - platformLength); // случайный X, чтобы платформа умещалась
-
-			// Заполняем клетки платформы землёй
-			for (int j = 0; j < platformLength; j++)
-			{
-				levelGrid[x + j, y] = GroundTileID;
-			}
-		}
-	}
-
-	/// <summary>
-	/// \"Продырявить\" некоторые платформы.
-	/// Случайно выбираем точки и если там земля, то превращаем часть в пустоту.
-	/// Можно добавить ограничения, чтобы не портить нижний пол.
-	/// </summary>
-	private void AddHolesToPlatforms()
-	{
-		Random rand = new Random();
-		int holesCount = (LevelWidth * LevelHeight) / 20; // Примерно 5% ячеек делаем дырками
-
-		for (int i = 0; i < holesCount; i++)
-		{
-			int rx = rand.Next(0, LevelWidth);
-			int ry = rand.Next(1, LevelHeight - 1); // не трогаем самый низ (0..height-1)
-			
-			if (levelGrid[rx, ry] == GroundTileID)
-			{
-				// \"Дырка\" в 2-3 ячейки шириной
-				int holeWidth = rand.Next(1, 3);
-				for (int w = 0; w < holeWidth; w++)
-				{
-					if (rx + w < LevelWidth)
-						levelGrid[rx + w, ry] = EmptyTileID;
-				}
-			}
-		}
-	}
-
-	/// <summary>
-	/// Отрисовываем уровень в TileMapLayer.
-	/// </summary>
-	private void RenderLevel()
-	{
-		for (int x = 0; x < LevelWidth; x++)
-		{
-			for (int y = 0; y < LevelHeight; y++)
-			{
-				tileMapLayer.SetCell(new Vector2I(x, y), levelGrid[x, y]);
-			}
-		}
-	}
-}
-"
-
 [node name="FirstLevel" type="Node2D"]
-script = SubResource("CSharpScript_cs1u7")
-LevelWidth = null
-LevelHeight = null
-GroundTileID = null
-EmptyTileID = null
-PlatformCount = null
-MinPlatformLength = null
-MaxPlatformLength = null
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("2_5phxk")]
 offset = Vector2(0, -1827)
@@ -1283,7 +1140,10 @@ scale = Vector2(1.485, 1.485)
 position = Vector2(835, 580)
 
 [node name="Spawner" parent="." instance=ExtResource("15_8y7rl")]
-position = Vector2(2640, 566)
+position = Vector2(2640, 550)
+
+[node name="Spawner2" parent="." instance=ExtResource("15_8y7rl")]
+position = Vector2(1500, 550)
 
 [node name="Animated plants 1" type="TileMapLayer" parent="."]
 position = Vector2(0, 19.645)
