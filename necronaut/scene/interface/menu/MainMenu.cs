@@ -1,8 +1,6 @@
 using Godot;
-using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 public partial class MainMenu : Control
 {
@@ -14,7 +12,8 @@ public partial class MainMenu : Control
 	private Stopwatch _stopwatch = new Stopwatch();
 
 	private ParallaxBackground _background;
-	private ProgressBar _progressBar; // Reference to the loading bar
+	private ProgressBar _progressBar;
+	private VBoxContainer _buttonsContainer;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -23,8 +22,9 @@ public partial class MainMenu : Control
 		_progressBar = GetNode<ProgressBar>("ProgressBar");
 
 		_progressBar.Visible = false;
-		var newGameButton = GetNode<Button>("ButtonsList/NewGameButton");
-		newGameButton.GrabFocus();
+
+		_buttonsContainer = GetNode<VBoxContainer>("ButtonsList");
+		(_buttonsContainer.GetChildren().First() as Button).GrabFocus();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -60,6 +60,13 @@ public partial class MainMenu : Control
 		_isNewGameSceneLoading = true;
 		_progressBar.Visible = true;
 		_stopwatch.Start();
+		foreach (var child in _buttonsContainer.GetChildren())
+		{
+			if (child is Button button)
+			{
+				button.Disabled = true;
+			}
+		}
 	}
 
 	public void OnQuitButtonPressed()
