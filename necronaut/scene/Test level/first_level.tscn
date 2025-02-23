@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://bftimluj4gth1"]
+[gd_scene load_steps=17 format=4 uid="uid://bftimluj4gth1"]
 
 [ext_resource type="PackedScene" uid="uid://1v5juqred31s" path="res://BG Forest1.tscn" id="2_5phxk"]
 [ext_resource type="PackedScene" uid="uid://byaeiq58lls2y" path="res://scene/decoration/Lamp post.tscn" id="3_bjdm4"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dundvyj4ddwep" path="res://scene/decoration/Cross 1.tscn" id="9_sefun"]
 [ext_resource type="PackedScene" uid="uid://brlpub1n6lhpo" path="res://scene/decoration/Cross 2.tscn" id="10_ghii5"]
 [ext_resource type="PackedScene" uid="uid://d3g5ll7gmqgkm" path="res://scene/player/Face/Face Full HP icone.tscn" id="14_h32vo"]
+[ext_resource type="PackedScene" uid="uid://4gpdl801aen0" path="res://scene/player/Face/FaceHPIconManager.tscn" id="14_ilidg"]
 [ext_resource type="PackedScene" uid="uid://dqk8nx8xch636" path="res://scene/interface/bar/LifeBar.tscn" id="14_k00ic"]
 [ext_resource type="PackedScene" uid="uid://capsp7au2bvs5" path="res://scene/Spawner/spawner.tscn" id="15_8y7rl"]
 
@@ -1163,13 +1164,16 @@ tile_map_data = PackedByteArray("AAA5AA8AAwAAAAAAAAA6AA8AAwAAAAAAAAA8AA8AAwAAAAA
 tile_set = ExtResource("6_okhbr")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+position = Vector2(16, 32)
 color = Color(1, 1, 0.905882, 1)
 energy = 0.67
 blend_mode = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="FaceFullHpIcone" parent="CanvasLayer" instance=ExtResource("14_h32vo")]
+[node name="FaceHpIconManager" parent="CanvasLayer" instance=ExtResource("14_ilidg")]
+
+[node name="FaceFullHpIcone" parent="CanvasLayer/FaceHpIconManager" instance=ExtResource("14_h32vo")]
 position = Vector2(1089, 64)
 scale = Vector2(0.65, 0.65)
 

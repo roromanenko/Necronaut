@@ -1,0 +1,159 @@
+using Godot;
+
+public partial class FaceFullHpIcone : Node2D
+{
+	private Node2D _current; // Текущий отображаемый объект
+	private Node2D _fullHP;
+	private Node2D _lowDamage;
+	private Node2D _halfHP;
+	private Node2D _lowHP;
+	private CharacterBody2D _player;
+
+	private int _maxHp = 0; // Максимальное HP игрока
+
+	public void SwitchFaceIcon(int condition)
+	{
+		// Логируем переключение иконки
+		GD.Print($"Switching face icon to condition: {condition}");
+
+		// Скрываем текущий объект
+		if (_current != null)
+		{
+			_current.Visible = false;
+			GD.Print($"Hiding current face icon: {_current.Name}");
+		}
+
+		// Выбираем новый объект в зависимости от условия
+		switch (condition)
+		{
+			case 0:
+				_current = _fullHP;
+				break;
+			case 1:
+				_current = _lowDamage;
+				break;
+			case 2:
+				_current = _halfHP;
+				break;
+			case 3:
+				_current = _lowHP;
+				break;
+			default:
+				GD.PrintErr("Invalid condition for face icon!");
+				return;
+		}
+
+		// Показываем новый объект
+		if (_current != null)
+		{
+			_current.Visible = true;
+			GD.Print($"Showing face icon: {_current.Name}");
+
+			// Запускаем анимацию, если есть AnimatedSprite2D
+			var animatedSprite = _current.GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+			if (animatedSprite != null)
+			{
+				animatedSprite.Play("idle");
+				GD.Print($"Playing 'idle' animation for {_current.Name}");
+			}
+			else
+			{
+				GD.PrintErr($"AnimatedSprite2D not found in {_current.Name}!");
+			}
+		}
+		else
+		{
+			GD.PrintErr("Current face icon is null!");
+		}
+	}
+
+	public override void _Ready()
+	{
+		GD.PrintErr("Started!");
+		// Получаем ссылку на игрока
+		_player = GetParent()?.GetParent()?.GetNodeOrNull<CharacterBody2D>("Player");
+		if (_player == null)
+		{
+			GD.PrintErr("Player node not found!");
+			return;
+		}
+
+		// Получаем максимальное HP игрока
+if (_player.Get("healPoints").VariantType == Variant.Type.Int)
+{
+	_maxHp = _player.Get("healPoints").AsInt32(); // Получаем healPoints как int
+	GD.Print($"Player max HP: {_maxHp}");
+}
+else
+{
+	GD.PrintErr("Player's healPoints is not an integer or is missing!");
+}
+
+		// Получаем ссылки на дочерние ноды
+		_fullHP = GetNodeOrNull<Node2D>("FullHP");
+		_lowDamage = GetNodeOrNull<Node2D>("LowDamage");
+		_halfHP = GetNodeOrNull<Node2D>("HalfHP");
+		_lowHP = GetNodeOrNull<Node2D>("LowHP");
+
+		// Проверяем, что все иконки найдены
+		if (_fullHP == null || _lowDamage == null || _halfHP == null || _lowHP == null)
+		{
+			GD.PrintErr("One or more face icons are missing!");
+			return;
+		}
+
+		// Устанавливаем текущий объект
+		_current = _fullHP;
+		GD.Print($"Initial face icon set to: {_current.Name}");
+
+		// Скрываем все объекты, кроме текущего
+		foreach (var node in new[] { _fullHP, _lowDamage, _halfHP, _lowHP })
+		{
+			if (node != _current)
+			{
+				node.Visible = false;
+				GD.Print($"Hiding face icon: {node.Name}");
+			}
+		}
+	}
+
+	public override void _Process(double delta)
+{
+	if (_player == null)
+	{
+		GD.PrintErr("Player is null!");
+		return;
+	}
+
+	// Получаем текущее HP игрока
+	var healPointsVariant = _player.Get("healPoints");
+	if (healPointsVariant.VariantType == Variant.Type.Int)
+	{
+		int currentHp = healPointsVariant.AsInt32();
+		double hpPercentage = (double)currentHp / _maxHp;
+		GD.Print($"Current HP: {currentHp}, HP Percentage: {hpPercentage * 100}%");
+
+		// Логика переключения иконок в зависимости от процента HP
+		if (hpPercentage >= 0.75)
+		{
+			SwitchFaceIcon(0); // Full HP
+		}
+		else if (hpPercentage >= 0.5)
+		{
+			SwitchFaceIcon(1); // Low Damage
+		}
+		else if (hpPercentage >= 0.25)
+		{
+			SwitchFaceIcon(2); // Half HP
+		}
+		else
+		{
+			SwitchFaceIcon(3); // Low HP
+		}
+	}
+	else
+	{
+		GD.PrintErr("Player's healPoints is not an integer!");
+	}
+}
+}

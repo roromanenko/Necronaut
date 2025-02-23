@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://d3g5ll7gmqgkm"]
+[gd_scene load_steps=15 format=3 uid="uid://d3g5ll7gmqgkm"]
 
 [ext_resource type="Texture2D" uid="uid://bypi5v1gvkivp" path="res://assets/Character skin/Face/Face Full HP.png" id="1_hh153"]
+[ext_resource type="Script" path="res://scene/player/Face/FaceHpIconeManager.cs" id="1_v0ayr"]
 [ext_resource type="Texture2D" uid="uid://co6unn1cqewgy" path="res://assets/UI/interface/Face icone.png" id="2_5wnt0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f68ts"]
@@ -87,12 +88,12 @@ animations = [{
 }]
 
 [node name="FaceFullHpIcone" type="Node2D"]
+script = ExtResource("1_v0ayr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_hqfnd")
 animation = &"idle"
-frame_progress = 0.836211
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.14, 1.14)

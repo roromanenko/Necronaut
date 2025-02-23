@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://cfl3lkufcgob"]
+
+[node name="SpawnPointManager" type="Node2D"]
