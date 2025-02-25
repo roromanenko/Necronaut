@@ -25,7 +25,7 @@ public partial class Player : CharacterBody2D
 	int shieldLevel = 1;
 	int damageLevel = 1;
 
-	int healPoints = 200;
+	int healPoints = 100;
 	int shieldPoints = 10;
 	int damageMultiplier = 1;
 	int instantDamage = 0;

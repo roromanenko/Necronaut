@@ -3,6 +3,7 @@ using System;
 
 public partial class GoblinScout : Enemy
 {
+	private int  _damage = 26;
 	
 	override protected void StartAttack()
 	{
@@ -50,7 +51,7 @@ public partial class GoblinScout : Enemy
 			if (parent != null && parent.HasMethod("OnHit"))
 			{
 			//	GD.Print("Calling OnHit on parent...");
-				parent.Call("OnHit", 50);
+				parent.Call("OnHit",_damage);
 			}
 			else
 			{

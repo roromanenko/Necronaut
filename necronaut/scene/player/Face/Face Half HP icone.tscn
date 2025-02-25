@@ -61,7 +61,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5s12j")
 }],
-"loop": true,
+"loop": false,
 "name": &"damage",
 "speed": 5.0
 }, {
@@ -90,7 +90,7 @@ animations = [{
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fdudj")
-animation = &"damage"
+animation = &"idle"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1, 0)
