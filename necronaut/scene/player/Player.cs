@@ -18,7 +18,7 @@ public partial class Player : CharacterBody2D
 	private bool _isPunch = false;
 	private bool _isAirAttack = false;
 	private bool _isGroundAttack = false;
-	bool isDead = false;
+	public bool isDead = false;
 
 	// Характеристики персонажа
 	int healPointLevel = 1;
@@ -54,6 +54,10 @@ public partial class Player : CharacterBody2D
 	[Export] private float doubleJumpMultiplier = 0.7f;
 	private int jumpsUsed = 0;
 
+	public bool isAlive()
+	{
+		return !isDead;
+	}
 	public override void _Ready()
 	{
 		collision_shape = GetNode<CollisionShape2D>("CollisionShape2D");
@@ -65,7 +69,7 @@ public partial class Player : CharacterBody2D
 		PackedScene weaponScene = ResourceLoader.Load<PackedScene>("res://scene/weapons/Iron Axe.tscn");
 		if (weaponScene == null)
 		{
-			GD.PrintErr("res://scene/weapons/Iron Axe.tscn не найден");
+		//	GD.PrintErr("res://scene/weapons/Iron Axe.tscn не найден");
 		}
 		else
 		{
@@ -73,7 +77,7 @@ public partial class Player : CharacterBody2D
 			Node2D weaponSocket = GetNode<Node2D>("WeaponSocket");
 			if (weaponSocket == null)
 			{
-				GD.PrintErr("Узел WeaponSocket не найден в сцене персонажа!");
+				//GD.PrintErr("Узел WeaponSocket не найден в сцене персонажа!");
 			}
 			else
 			{
@@ -86,6 +90,8 @@ public partial class Player : CharacterBody2D
 
 public override void _Process(double delta)
 {
+	if (isDead)
+		return;
 		ProcessAnimation();
 }
 
@@ -327,15 +333,15 @@ public override void _PhysicsProcess(double delta)
 			if (collider == null || collider == this)
 				continue;
 
-			GD.Print("Hit: " + collider.Name);
+		//	GD.Print("Hit: " + collider.Name);
 			if (collider.HasMethod("OnHit"))
 			{
-				GD.Print("Calling OnHit on " + collider.Name);
+			//	GD.Print("Calling OnHit on " + collider.Name);
 				collider.Call("OnHit", 50);
 			}
 			else
 			{
-				GD.Print("No OnHit method found on " + collider.Name);
+			//	GD.Print("No OnHit method found on " + collider.Name);
 			}
 		}
 	}
@@ -367,19 +373,19 @@ public override void _PhysicsProcess(double delta)
 		if (collider == null)
 			continue;
 
-		GD.Print("Hit: " + collider.Name);
+		//GD.Print("Hit: " + collider.Name);
 
 		if (collider == this)
 			continue;
 
 		if (collider.HasMethod("OnHit"))
 		{
-			GD.Print("Calling OnHit on " + collider.Name);
+			//GD.Print("Calling OnHit on " + collider.Name);
 			collider.Call("OnHit", 50);
 		}
 		else
 		{
-			GD.Print("No OnHit method found on " + collider.Name);
+			//GD.Print("No OnHit method found on " + collider.Name);
 		}
 	}
 	}
@@ -403,7 +409,7 @@ public override void _PhysicsProcess(double delta)
 		}
 		else if (_sprite.Animation == "death")
 		{
-			CallDeferred("queue_free");
+			//CallDeferred("queue_free");
 		}
 	}
 
@@ -414,7 +420,10 @@ public override void _PhysicsProcess(double delta)
 
 		if (healPoints <= 0)
 		{
+			GD.Print("Popki");
+			_sprite.SpeedScale = _defaultSpeedScale;
 			_sprite.Play("death");
+			GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);
 			weaponInstance.CallDeferred("queue_free");
 			isDead = true;
 		}

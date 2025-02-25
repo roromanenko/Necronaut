@@ -40,21 +40,21 @@ public partial class GoblinScout : Enemy
 			if (collider == null)
 				continue;
 
-			GD.Print("Hit: " + collider.Name);
+			//GD.Print("Hit: " + collider.Name);
 
 			if (collider == this)
 				continue;
 
-			GD.Print("Hit: " + collider.Name);
+			//GD.Print("Hit: " + collider.Name);
 			var parent = collider;
 			if (parent != null && parent.HasMethod("OnHit"))
 			{
-				GD.Print("Calling OnHit on parent...");
+			//	GD.Print("Calling OnHit on parent...");
 				parent.Call("OnHit", 50);
 			}
 			else
 			{
-				GD.Print("No OnHit method found on parent.");
+				//GD.Print("No OnHit method found on parent.");
 			}
 		}
 	}

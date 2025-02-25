@@ -58,7 +58,7 @@ public partial class Enemy : CharacterBody2D
 		Vector2 directionToPlayer = player.GlobalPosition - GlobalPosition;
 		float distanceToPlayer = directionToPlayer.Length();
 
-		if (distanceToPlayer <= followDistanceThreshold)
+		if (distanceToPlayer <= followDistanceThreshold &&  !(bool)(player.Get("isDead")))
 		{
 			FollowPlayer(directionToPlayer, delta);
 		}
@@ -161,7 +161,7 @@ public partial class Enemy : CharacterBody2D
 	{
 		float distanceToPlayer = GlobalPosition.DistanceTo(player.GlobalPosition);
 
-		if (distanceToPlayer <= attackDistanceThreshold && !isAttacking)
+		if (distanceToPlayer <= attackDistanceThreshold && !isAttacking && !(bool)(player.Get("isDead")))
 		{
 			StartAttack();
 		}

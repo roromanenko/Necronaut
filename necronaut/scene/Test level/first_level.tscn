@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://bftimluj4gth1"]
+[gd_scene load_steps=22 format=4 uid="uid://bftimluj4gth1"]
 
 [ext_resource type="PackedScene" uid="uid://1v5juqred31s" path="res://BG Forest1.tscn" id="2_5phxk"]
 [ext_resource type="PackedScene" uid="uid://byaeiq58lls2y" path="res://scene/decoration/Lamp post.tscn" id="3_bjdm4"]
@@ -12,10 +12,176 @@
 [ext_resource type="PackedScene" uid="uid://dau47c2k1i4o1" path="res://scene/decoration/Beam 2.tscn" id="8_kad3k"]
 [ext_resource type="PackedScene" uid="uid://dundvyj4ddwep" path="res://scene/decoration/Cross 1.tscn" id="9_sefun"]
 [ext_resource type="PackedScene" uid="uid://brlpub1n6lhpo" path="res://scene/decoration/Cross 2.tscn" id="10_ghii5"]
+[ext_resource type="PackedScene" uid="uid://2qtkmokq0grm" path="res://scene/player/Face/FaceIconManager.tscn" id="14_2rqb6"]
 [ext_resource type="PackedScene" uid="uid://d3g5ll7gmqgkm" path="res://scene/player/Face/Face Full HP icone.tscn" id="14_h32vo"]
-[ext_resource type="PackedScene" uid="uid://4gpdl801aen0" path="res://scene/player/Face/FaceHPIconManager.tscn" id="14_ilidg"]
 [ext_resource type="PackedScene" uid="uid://dqk8nx8xch636" path="res://scene/interface/bar/LifeBar.tscn" id="14_k00ic"]
 [ext_resource type="PackedScene" uid="uid://capsp7au2bvs5" path="res://scene/Spawner/spawner.tscn" id="15_8y7rl"]
+[ext_resource type="Script" path="res://scene/player/Face/FaceIconManager.cs" id="16_ptril"]
+[ext_resource type="PackedScene" uid="uid://cfd56ly3nfqnt" path="res://scene/player/Face/Face Low Damage icone.tscn" id="17_0d0v0"]
+[ext_resource type="PackedScene" uid="uid://c5ro1w2v8v4r2" path="res://scene/player/Face/Face Half HP icone.tscn" id="18_dswbp"]
+[ext_resource type="PackedScene" uid="uid://chijaq0noh5hb" path="res://scene/player/Face/Face Low HP icone.tscn" id="19_ms0eq"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_wvr6i"]
+script/source = "using Godot;
+
+public partial class FaceFullHpIcone : Node2D
+{
+	private Node2D _current; // Текущий отображаемый объект
+	private Node2D _fullHP;
+	private Node2D _lowDamage;
+	private Node2D _halfHP;
+	private Node2D _lowHP;
+	private CharacterBody2D _player;
+
+	private int _maxHp = 0; // Максимальное HP игрока
+
+	public void SwitchFaceIcon(int condition)
+	{
+		// Логируем переключение иконки
+		GD.Print($\"Switching face icon to condition: {condition}\");
+
+		// Скрываем текущий объект
+		if (_current != null)
+		{
+			_current.Visible = false;
+			GD.Print($\"Hiding current face icon: {_current.Name}\");
+		}
+
+		// Выбираем новый объект в зависимости от условия
+		switch (condition)
+		{
+			case 0:
+				_current = _fullHP;
+				break;
+			case 1:
+				_current = _lowDamage;
+				break;
+			case 2:
+				_current = _halfHP;
+				break;
+			case 3:
+				_current = _lowHP;
+				break;
+			default:
+				GD.PrintErr(\"Invalid condition for face icon!\");
+				return;
+		}
+
+		// Показываем новый объект
+		if (_current != null)
+		{
+			_current.Visible = true;
+			GD.Print($\"Showing face icon: {_current.Name}\");
+
+			// Запускаем анимацию, если есть AnimatedSprite2D
+			var animatedSprite = _current.GetNodeOrNull<AnimatedSprite2D>(\"AnimatedSprite2D\");
+			if (animatedSprite != null)
+			{
+				animatedSprite.Play(\"idle\");
+				GD.Print($\"Playing 'idle' animation for {_current.Name}\");
+			}
+			else
+			{
+				GD.PrintErr($\"AnimatedSprite2D not found in {_current.Name}!\");
+			}
+		}
+		else
+		{
+			GD.PrintErr(\"Current face icon is null!\");
+		}
+	}
+
+	public override void _Ready()
+	{
+		GD.PrintErr(\"Started!\");
+		// Получаем ссылку на игрока
+		_player = GetParent()?.GetParent()?.GetNodeOrNull<CharacterBody2D>(\"Player\");
+		if (_player == null)
+		{
+			GD.PrintErr(\"Player node not found!\");
+			return;
+		}
+
+		// Получаем максимальное HP игрока
+if (_player.Get(\"healPoints\").VariantType == Variant.Type.Int)
+{
+	_maxHp = _player.Get(\"healPoints\").AsInt32(); // Получаем healPoints как int
+	GD.Print($\"Player max HP: {_maxHp}\");
+}
+else
+{
+	GD.PrintErr(\"Player's healPoints is not an integer or is missing!\");
+}
+
+		// Получаем ссылки на дочерние ноды
+		_fullHP = GetNodeOrNull<Node2D>(\"FullHP\");
+		_lowDamage = GetNodeOrNull<Node2D>(\"LowDamage\");
+		_halfHP = GetNodeOrNull<Node2D>(\"HalfHP\");
+		_lowHP = GetNodeOrNull<Node2D>(\"LowHP\");
+
+		// Проверяем, что все иконки найдены
+		if (_fullHP == null || _lowDamage == null || _halfHP == null || _lowHP == null)
+		{
+			GD.PrintErr(\"One or more face icons are missing!\");
+			return;
+		}
+
+		// Устанавливаем текущий объект
+		_current = _fullHP;
+		GD.Print($\"Initial face icon set to: {_current.Name}\");
+
+		// Скрываем все объекты, кроме текущего
+		foreach (var node in new[] { _fullHP, _lowDamage, _halfHP, _lowHP })
+		{
+			if (node != _current)
+			{
+				node.Visible = false;
+				GD.Print($\"Hiding face icon: {node.Name}\");
+			}
+		}
+	}
+
+	public override void _Process(double delta)
+{
+	if (_player == null)
+	{
+		GD.PrintErr(\"Player is null!\");
+		return;
+	}
+
+	// Получаем текущее HP игрока
+	var healPointsVariant = _player.Get(\"healPoints\");
+	if (healPointsVariant.VariantType == Variant.Type.Int)
+	{
+		int currentHp = healPointsVariant.AsInt32();
+		double hpPercentage = (double)currentHp / _maxHp;
+		GD.Print($\"Current HP: {currentHp}, HP Percentage: {hpPercentage * 100}%\");
+
+		// Логика переключения иконок в зависимости от процента HP
+		if (hpPercentage >= 0.75)
+		{
+			SwitchFaceIcon(0); // Full HP
+		}
+		else if (hpPercentage >= 0.5)
+		{
+			SwitchFaceIcon(1); // Low Damage
+		}
+		else if (hpPercentage >= 0.25)
+		{
+			SwitchFaceIcon(2); // Half HP
+		}
+		else
+		{
+			SwitchFaceIcon(3); // Low HP
+		}
+	}
+	else
+	{
+		GD.PrintErr(\"Player's healPoints is not an integer!\");
+	}
+}
+}
+"
 
 [node name="FirstLevel" type="Node2D"]
 
@@ -1169,11 +1335,28 @@ color = Color(1, 1, 0.905882, 1)
 energy = 0.67
 blend_mode = 1
 
+[node name="FaceIconManager" parent="." instance=ExtResource("14_2rqb6")]
+script = SubResource("CSharpScript_wvr6i")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="FaceHpIconManager" parent="CanvasLayer" instance=ExtResource("14_ilidg")]
+[node name="FaceIconManager" parent="CanvasLayer" instance=ExtResource("14_2rqb6")]
+script = ExtResource("16_ptril")
 
-[node name="FaceFullHpIcone" parent="CanvasLayer/FaceHpIconManager" instance=ExtResource("14_h32vo")]
+[node name="FaceFullHpIcone" parent="CanvasLayer/FaceIconManager" instance=ExtResource("14_h32vo")]
+position = Vector2(1089, 64)
+scale = Vector2(0.65, 0.65)
+script = null
+
+[node name="FaceLowDamageIcone" parent="CanvasLayer/FaceIconManager" instance=ExtResource("17_0d0v0")]
+position = Vector2(1089, 64)
+scale = Vector2(0.65, 0.65)
+
+[node name="FaceHalfHpIcone" parent="CanvasLayer/FaceIconManager" instance=ExtResource("18_dswbp")]
+position = Vector2(1089, 64)
+scale = Vector2(0.65, 0.65)
+
+[node name="FaceLowHpIcone" parent="CanvasLayer/FaceIconManager" instance=ExtResource("19_ms0eq")]
 position = Vector2(1089, 64)
 scale = Vector2(0.65, 0.65)
 
