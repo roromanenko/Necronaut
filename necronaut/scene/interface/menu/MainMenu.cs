@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Diagnostics;
 using System.Linq;
 
@@ -8,7 +9,6 @@ public partial class MainMenu : Control
 	private string _newGameScenePath = "res://scene/Test level/first_level.tscn";
 
 	private bool _isNewGameSceneLoading = false;
-	private double _approximateLoadingTimeMilliseconds = 2000;
 	private Stopwatch _stopwatch = new Stopwatch();
 
 	private ParallaxBackground _background;
@@ -39,7 +39,9 @@ public partial class MainMenu : Control
 		ResourceLoader.ThreadLoadStatus status = ResourceLoader.LoadThreadedGetStatus(_newGameScenePath);
 
 		// immitate loading bar since ResourceLoader.LoadThreadedGetStatus progress is not correct
-		var currentProgress = _stopwatch.ElapsedMilliseconds * 100 / _approximateLoadingTimeMilliseconds;
+		// Approximate time is 2000 milliseconds, function was found imperially
+		// https://www.desmos.com/calculator/ibhsbklt0w
+		var currentProgress = 100 * (1 - Math.Pow(Math.E, -0.0011 * _stopwatch.ElapsedMilliseconds));
 		_progressBar.Value = currentProgress;
 
 		if (status == ResourceLoader.ThreadLoadStatus.Loaded)

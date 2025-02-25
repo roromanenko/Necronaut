@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Player : CharacterBody2D
 {
@@ -9,7 +8,7 @@ public partial class Player : CharacterBody2D
 
 	private const float Speed = 300.0f;
 	private const float JumpVelocity = -750.0f;
-	private const float Gravity = 1000f;
+	private const float Gravity = 2000f;
 
 	// Параметры движения и состояния
 	private float direction = 0;
@@ -69,7 +68,7 @@ public partial class Player : CharacterBody2D
 		PackedScene weaponScene = ResourceLoader.Load<PackedScene>("res://scene/weapons/Iron Axe.tscn");
 		if (weaponScene == null)
 		{
-		//	GD.PrintErr("res://scene/weapons/Iron Axe.tscn не найден");
+			//	GD.PrintErr("res://scene/weapons/Iron Axe.tscn не найден");
 		}
 		else
 		{
@@ -88,42 +87,41 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-public override void _Process(double delta)
-{
-	if (isDead)
-		return;
+	public override void _Process(double delta)
+	{
+		if (isDead)
+			return;
 		ProcessAnimation();
-}
-
-
-public override void _PhysicsProcess(double delta)
-{
-	if (isDead)
-		return;
-
-	// Обрабатываем воздушную атаку и приземление
-	ProcessAirAttack(delta);
-	ProcessLanding();
-
-	// Применяем гравитацию
-	ProcessGravity(delta);
-
-	// Если персонаж не атакует (на земле или в прыжке), разрешаем движение и прыжки.
-	if (!_isAirAttack && !_isGroundAttack)
-	{
-		ProcessJump();
-		ProcessMovement(delta);
-	}
-	else
-	{
-		// Во время атаки запрещаем горизонтальное движение
-		Velocity = new Vector2(0, Velocity.Y);
 	}
 
-	MoveAndSlide();
-	ProcessAttackInput();
 
-}
+	public override void _PhysicsProcess(double delta)
+	{
+		if (isDead)
+			return;
+
+		// Обрабатываем воздушную атаку и приземление
+		ProcessAirAttack(delta);
+		ProcessLanding();
+
+		// Применяем гравитацию
+		ProcessGravity(delta);
+
+		// Если персонаж не атакует (на земле или в прыжке), разрешаем движение и прыжки.
+		if (!_isAirAttack && !_isGroundAttack && !_isPunch)
+		{
+			ProcessJump();
+			ProcessMovement(delta);
+		}
+		else
+		{
+			// Во время атаки запрещаем горизонтальное движение
+			Velocity = new Vector2(0, Velocity.Y);
+		}
+
+		MoveAndSlide();
+		ProcessAttackInput();
+	}
 
 
 	// Применение гравитации
@@ -137,8 +135,6 @@ public override void _PhysicsProcess(double delta)
 	private void ProcessMovement(double delta)
 	{
 		Vector2 velocity = Velocity;
-		if (!IsOnFloor())
-			velocity.Y += Gravity * (float)delta;
 
 		direction = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");
 		if (direction != 0)
@@ -193,7 +189,7 @@ public override void _PhysicsProcess(double delta)
 				_isPunch = true;
 				_airAttackTimer = _airAttackStallTime;
 				_hasStartedDive = false;
-				_wasOnFloor = false;	
+				_wasOnFloor = false;
 
 			}
 			else
@@ -215,8 +211,6 @@ public override void _PhysicsProcess(double delta)
 				float newVelY = Mathf.MoveToward(Velocity.Y, 0, _airAttackDeceleration * (float)delta);
 				Velocity = new Vector2(newVelX, newVelY);
 				_airAttackTimer -= (float)delta;
-				MoveAndSlide();
-				ProcessAnimation(); // Обновляем анимацию во время воздушной атаки
 			}
 			else if (!_hasStartedDive)
 			{
@@ -232,7 +226,7 @@ public override void _PhysicsProcess(double delta)
 		bool justLanded = (!_wasOnFloor && IsOnFloor());
 		if (justLanded && _isAirAttack)
 		{
-					_wasOnFloor = IsOnFloor();
+			_wasOnFloor = IsOnFloor();
 
 			_isAirAttack = false;
 			_isPunch = false;
@@ -278,21 +272,20 @@ public override void _PhysicsProcess(double delta)
 		{
 			if (Mathf.Abs(Velocity.X) > 0.1f)
 			{
-				_isPunch = false;
 				_sprite.SpeedScale = _defaultSpeedScale;
 				_sprite.Play("run");
 				_weapon?.PlayRunAnimation();
 			}
-			else if(_isGroundAttack )
+			else if (_isGroundAttack)
 			{
-				if(_sprite.Animation == "ground attack") return;
+				if (_sprite.Animation == "ground attack") return;
 				_sprite.SpeedScale = _groundAttackSpeedScale;
 				_sprite.Play("ground attack");
 				_weapon?.PlayGroundAttackAnimation();
 			}
 			else if (_isPunch)
 			{
-				if((_sprite.Animation == "attack"))return;
+				if ((_sprite.Animation == "attack")) return;
 				_sprite.SpeedScale = _attackSpeedScale;
 				_sprite.Play("attack");
 				_weapon?.PlayAttackAnimation();
@@ -313,7 +306,7 @@ public override void _PhysicsProcess(double delta)
 			return;
 
 		Vector2 start = collision_shape.GlobalPosition;
-		Vector2 offset = new Vector2(_lastDirection * _rayLength , 0);
+		Vector2 offset = new Vector2(_lastDirection * _rayLength, 0);
 
 		var shape = collision_shape.Shape;
 		PhysicsShapeQueryParameters2D query = new PhysicsShapeQueryParameters2D();
@@ -333,15 +326,15 @@ public override void _PhysicsProcess(double delta)
 			if (collider == null || collider == this)
 				continue;
 
-		//	GD.Print("Hit: " + collider.Name);
+			//	GD.Print("Hit: " + collider.Name);
 			if (collider.HasMethod("OnHit"))
 			{
-			//	GD.Print("Calling OnHit on " + collider.Name);
+				//	GD.Print("Calling OnHit on " + collider.Name);
 				collider.Call("OnHit", 50);
 			}
 			else
 			{
-			//	GD.Print("No OnHit method found on " + collider.Name);
+				//	GD.Print("No OnHit method found on " + collider.Name);
 			}
 		}
 	}
@@ -349,45 +342,45 @@ public override void _PhysicsProcess(double delta)
 	private void ExecuteAirAttack()
 	{
 		if (collision_shape == null)
-		return;
+			return;
 
-	var circleShape = new CircleShape2D();
-	circleShape.Radius = 50;
+		var circleShape = new CircleShape2D();
+		circleShape.Radius = 50;
 
-	Vector2 attackCenter = collision_shape.GlobalPosition;
+		Vector2 attackCenter = collision_shape.GlobalPosition;
 
-	PhysicsShapeQueryParameters2D query = new PhysicsShapeQueryParameters2D();
-	query.SetShape(circleShape);
-	query.Transform = new Transform2D(0, attackCenter);
-	query.CollideWithBodies = true;
+		PhysicsShapeQueryParameters2D query = new PhysicsShapeQueryParameters2D();
+		query.SetShape(circleShape);
+		query.Transform = new Transform2D(0, attackCenter);
+		query.CollideWithBodies = true;
 
-	PhysicsDirectSpaceState2D spaceState = GetWorld2D().DirectSpaceState;
-	var results = spaceState.IntersectShape(query);
+		PhysicsDirectSpaceState2D spaceState = GetWorld2D().DirectSpaceState;
+		var results = spaceState.IntersectShape(query);
 
-	foreach (var result in results)
-	{
-		if (!result.ContainsKey("collider"))
-			continue;
-
-		Node2D collider = result["collider"].As<Node2D>();
-		if (collider == null)
-			continue;
-
-		//GD.Print("Hit: " + collider.Name);
-
-		if (collider == this)
-			continue;
-
-		if (collider.HasMethod("OnHit"))
+		foreach (var result in results)
 		{
-			//GD.Print("Calling OnHit on " + collider.Name);
-			collider.Call("OnHit", 50);
+			if (!result.ContainsKey("collider"))
+				continue;
+
+			Node2D collider = result["collider"].As<Node2D>();
+			if (collider == null)
+				continue;
+
+			//GD.Print("Hit: " + collider.Name);
+
+			if (collider == this)
+				continue;
+
+			if (collider.HasMethod("OnHit"))
+			{
+				//GD.Print("Calling OnHit on " + collider.Name);
+				collider.Call("OnHit", 50);
+			}
+			else
+			{
+				//GD.Print("No OnHit method found on " + collider.Name);
+			}
 		}
-		else
-		{
-			//GD.Print("No OnHit method found on " + collider.Name);
-		}
-	}
 	}
 
 	// Обработка завершения анимаций
