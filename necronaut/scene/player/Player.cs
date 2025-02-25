@@ -122,7 +122,6 @@ public override void _PhysicsProcess(double delta)
 
 	MoveAndSlide();
 	ProcessAttackInput();
-
 }
 
 
@@ -213,8 +212,6 @@ public override void _PhysicsProcess(double delta)
 				float newVelY = Mathf.MoveToward(Velocity.Y, 0, _airAttackDeceleration * (float)delta);
 				Velocity = new Vector2(newVelX, newVelY);
 				_airAttackTimer -= (float)delta;
-				MoveAndSlide();
-				ProcessAnimation(); // Обновляем анимацию во время воздушной атаки
 			}
 			else if (!_hasStartedDive)
 			{
