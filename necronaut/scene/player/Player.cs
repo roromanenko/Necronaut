@@ -9,7 +9,7 @@ public partial class Player : CharacterBody2D
 
 	private const float Speed = 300.0f;
 	private const float JumpVelocity = -750.0f;
-	private const float Gravity = 1000f;
+	private const float Gravity = 2000f;
 
 	// Параметры движения и состояния
 	private float direction = 0;
@@ -137,8 +137,6 @@ public override void _PhysicsProcess(double delta)
 	private void ProcessMovement(double delta)
 	{
 		Vector2 velocity = Velocity;
-		if (!IsOnFloor())
-			velocity.Y += Gravity * (float)delta;
 
 		direction = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");
 		if (direction != 0)
