@@ -413,6 +413,7 @@ public partial class Player : CharacterBody2D
 
 		if (healPoints <= 0)
 		{
+			healPoints = 0;
 			GD.Print("Popki");
 			_sprite.SpeedScale = _defaultSpeedScale;
 			_sprite.Play("death");

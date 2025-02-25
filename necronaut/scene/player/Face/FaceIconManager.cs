@@ -4,6 +4,7 @@ using System;
 public partial class FaceIconManager : Node2D
 {
 	private Node2D _current; // Текущий отображаемый объект
+
 	private Node2D _fullHP;
 	private Node2D _lowDamage;
 	private Node2D _halfHP;
@@ -14,10 +15,12 @@ public partial class FaceIconManager : Node2D
 	private int _maxHp = 0; // Максимальное HP игрока
 	private int _curHp = 0;
 
-	public void SwitchFaceIcon(int condition)
+	private int PlayerCurrentHp => _player.Get("healPoints").AsInt32();
+
+	public void SwitchFaceIcon(double hpPercentage)
 	{
 		// Логируем переключение иконки
-		GD.Print($"Switching face icon to condition: {condition}");
+		GD.Print($"Switching face icon to hpPercentage: {hpPercentage}");
 
 		// Скрываем текущий объект
 		if (_current != null)
@@ -26,30 +29,21 @@ public partial class FaceIconManager : Node2D
 			GD.Print($"Hiding current face icon: {_current.Name}");
 		}
 
-		// Выбираем новый объект в зависимости от условия
-		switch (condition)
+		_current = hpPercentage switch
 		{
-			case 0:
-				_current = _fullHP;
-				break;
-			case 1:
-				_current = _lowDamage;
-				break;
-			case 2:
-				_current = _halfHP;
-				break;
-			case 3:
-				_current = _lowHP;
-				break;
-			default:
-				GD.PrintErr("Invalid condition for face icon!");
-				return;
-		}
+			>= 0.75 => _fullHP,
+			>= 0.5 and < 0.75 => _lowDamage,
+			>= 0.25 and < 0.5 => _halfHP,
+			< 0.25 => _lowHP,
+			_ => throw new ArgumentException("Invalid condition for face icon!")
+		};
+
 		// Показываем новый объект
 		if (_current != null)
 		{
 			_animatedSprite = _current.GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
-				_animatedSprite.AnimationFinished += OnAnimationFinished;
+			_animatedSprite.AnimationFinished += OnAnimationFinished;
+
 			_current.Visible = true;
 			GD.Print($"Showing face icon: {_current.Name}");
 
@@ -107,17 +101,9 @@ public partial class FaceIconManager : Node2D
 		}
 
 		// Получаем максимальное HP игрока
-		var healPointsVariant = _player.Get("healPoints");
-		if (healPointsVariant.VariantType == Variant.Type.Int)
-		{
-			_maxHp = healPointsVariant.AsInt32();
-			_curHp = _maxHp;
-			GD.Print($"Player max HP: {_maxHp}");
-		}
-		else
-		{
-			GD.PrintErr("Player's healPoints is not an integer or is missing!");
-		}
+		_maxHp = PlayerCurrentHp;
+		_curHp = _maxHp;
+		GD.Print($"Player max HP: {_maxHp}");
 
 		// Получаем AnimatedSprite2D
 		_animatedSprite = _current.GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
@@ -141,46 +127,21 @@ public partial class FaceIconManager : Node2D
 		}
 
 		// Получаем текущее HP игрока
-		var healPointsVariant = _player.Get("healPoints");
-		if (healPointsVariant.VariantType == Variant.Type.Int)
+		int newHp = PlayerCurrentHp;
+		if (newHp < _curHp)
 		{
-			int newHp = healPointsVariant.AsInt32();
-			if (newHp < _curHp)
-			{
-				_animatedSprite?.Play("damage");
-			}
-			_curHp = newHp;
+			_animatedSprite?.Play("damage");
 		}
-		else
-		{
-			GD.PrintErr("Player's healPoints is not an integer or is missing!");
-		}
+		_curHp = newHp;
 	}
 
 	private void OnAnimationFinished()
 	{
 		if (_animatedSprite.Animation == "damage")
 		{
-			GD.PrintErr("Damage finished!");
+			GD.Print("Damage finished!");
 			double hpPercentage = (double)_curHp / _maxHp;
-
-			// Логика переключения иконок в зависимости от процента HP
-			if (hpPercentage >= 0.75)
-			{
-				SwitchFaceIcon(0); // Full HP
-			}
-			else if (hpPercentage >= 0.5)
-			{
-				SwitchFaceIcon(1); // Low Damage
-			}
-			else if (hpPercentage >= 0.25)
-			{
-				SwitchFaceIcon(2); // Half HP
-			}
-			else
-			{
-				SwitchFaceIcon(3); // Low HP
-			}
+			SwitchFaceIcon(hpPercentage);
 		}
 	}
 }
