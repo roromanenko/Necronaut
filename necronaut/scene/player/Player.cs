@@ -108,7 +108,7 @@ public partial class Player : CharacterBody2D
 		ProcessGravity(delta);
 
 		// Если персонаж не атакует (на земле или в прыжке), разрешаем движение и прыжки.
-		if (!_isAirAttack && !_isGroundAttack)
+		if (!_isAirAttack && !_isGroundAttack && !_isPunch)
 		{
 			ProcessJump();
 			ProcessMovement(delta);
@@ -272,7 +272,6 @@ public partial class Player : CharacterBody2D
 		{
 			if (Mathf.Abs(Velocity.X) > 0.1f)
 			{
-				_isPunch = false;
 				_sprite.SpeedScale = _defaultSpeedScale;
 				_sprite.Play("run");
 				_weapon?.PlayRunAnimation();
