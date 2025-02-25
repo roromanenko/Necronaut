@@ -146,5 +146,6 @@ animations = [{
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_sixfa")
-animation = &"jumpSmoke"
-frame_progress = 0.469118
+animation = &"landSmoke"
+frame = 4
+frame_progress = 0.634317
