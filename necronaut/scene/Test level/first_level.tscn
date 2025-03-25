@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://bftimluj4gth1"]
+[gd_scene load_steps=28 format=4 uid="uid://bftimluj4gth1"]
 
 [ext_resource type="PackedScene" uid="uid://1v5juqred31s" path="res://BG Forest1.tscn" id="2_5phxk"]
 [ext_resource type="PackedScene" uid="uid://byaeiq58lls2y" path="res://scene/decoration/Lamp post.tscn" id="3_bjdm4"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dundvyj4ddwep" path="res://scene/decoration/Cross 1.tscn" id="9_sefun"]
 [ext_resource type="PackedScene" uid="uid://brlpub1n6lhpo" path="res://scene/decoration/Cross 2.tscn" id="10_ghii5"]
 [ext_resource type="AudioStream" uid="uid://d4hwwwkvcldcv" path="res://assets/audio/music/forest_sounds.mp3" id="12_d3soi"]
+[ext_resource type="PackedScene" uid="uid://bnbrivirjt4h7" path="res://scene/decoration/Portal.tscn" id="12_k7pl0"]
 [ext_resource type="PackedScene" uid="uid://2qtkmokq0grm" path="res://scene/player/Face/FaceIconManager.tscn" id="14_2rqb6"]
 [ext_resource type="PackedScene" uid="uid://d3g5ll7gmqgkm" path="res://scene/player/Face/Face Full HP icone.tscn" id="14_h32vo"]
 [ext_resource type="PackedScene" uid="uid://dqk8nx8xch636" path="res://scene/interface/bar/LifeBar.tscn" id="14_k00ic"]
@@ -22,6 +23,58 @@
 [ext_resource type="PackedScene" uid="uid://c5ro1w2v8v4r2" path="res://scene/player/Face/Face Half HP icone.tscn" id="18_dswbp"]
 [ext_resource type="PackedScene" uid="uid://chijaq0noh5hb" path="res://scene/player/Face/Face Low HP icone.tscn" id="19_ms0eq"]
 [ext_resource type="AudioStream" uid="uid://bn7rtkcogwxlv" path="res://assets/audio/music/background_game_theme.mp3" id="21_vsnxk"]
+[ext_resource type="PackedScene" uid="uid://cmcu7qjxlxd5w" path="res://scene/interface/finalUI/FinalUI.tscn" id="24_n5gjh"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_1gimf"]
+script/source = "using Godot;
+using System;
+
+public partial class Portal : Area2D
+{
+	[Export]
+	public PackedScene FinalUiScene;
+
+	private bool _activated = false;
+
+	public override void _Ready()
+	{
+		// Подключаем сигнал вручную (на всякий случай, если не через редактор)
+		BodyEntered += OnBodyEntered;
+	}
+
+	private void OnBodyEntered(Node2D body)
+	{
+		if (_activated || !body.IsInGroup(\"Player\"))
+			return;
+
+		_activated = true;
+
+		// Инстанцируем финальный UI
+		var finalUi = FinalUiScene.Instantiate<CanvasLayer>();
+		GetTree().Root.AddChild(finalUi);
+
+		// Запускаем анимацию
+		var animPlayer = finalUi.GetNode<AnimationPlayer>(\"AnimationPlayer\");
+		animPlayer.Play(\"fade_and_show_text\");
+
+		// Запускаем таймер перехода в меню
+		var timer = new Timer
+		{
+			WaitTime = 10.0,
+			OneShot = true,
+			Autostart = true
+		};
+		timer.Timeout += OnFadeOutFinished;
+		finalUi.AddChild(timer);
+	}
+
+	private void OnFadeOutFinished()
+	{
+		// Переход в главное меню
+		GetTree().ChangeSceneToFile(\"res://scene/interface/menu/main_menu.tscn\");
+	}
+}
+"
 
 [sub_resource type="CSharpScript" id="CSharpScript_wvr6i"]
 script/source = "using Godot;
@@ -201,6 +254,7 @@ fog_height = 0.3
 fog_height_density = 0.0045
 
 [node name="FirstLevel" type="Node2D"]
+script = SubResource("CSharpScript_1gimf")
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("2_5phxk")]
 offset = Vector2(0, -1827)
@@ -1402,3 +1456,8 @@ bus = &"Music"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_dxqys")
+
+[node name="Portal" parent="." instance=ExtResource("12_k7pl0")]
+position = Vector2(8078, 467)
+scale = Vector2(6, 6)
+FinalUiScene = ExtResource("24_n5gjh")

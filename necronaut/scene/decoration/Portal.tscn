@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://bnbrivirjt4h7"]
+
+[ext_resource type="Script" path="res://scene/decoration/Portal.cs" id="1_drsgn"]
+[ext_resource type="Texture2D" uid="uid://bhi3tir1bwthq" path="res://assets/decoration/Dimensional_Portal.png" id="2_dja0n"]
+[ext_resource type="Texture2D" uid="uid://5nxxh5lffmnr" path="res://assets/textures of light/64x64.png" id="3_bk0m0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_exhnv"]
+radius = 7.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_srr58"]
+atlas = ExtResource("2_dja0n")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ah046"]
+atlas = ExtResource("2_dja0n")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgkq4"]
+atlas = ExtResource("2_dja0n")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehoup"]
+atlas = ExtResource("2_dja0n")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10k62"]
+atlas = ExtResource("2_dja0n")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nr0ak"]
+atlas = ExtResource("2_dja0n")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a56te"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srr58")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ah046")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgkq4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ehoup")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10k62")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nr0ak")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1_drsgn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -16)
+shape = SubResource("CapsuleShape2D_exhnv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, -16)
+sprite_frames = SubResource("SpriteFrames_a56te")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(2, -16)
+color = Color(1, 1, 0.270588, 1)
+energy = 0.56
+texture = ExtResource("3_bk0m0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
