@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://h4ragkijrukj"]
+
+[ext_resource type="Script" path="res://scene/interface/Control/conroll.gd" id="1_ajtt3"]
+
+[node name="Conroll" type="CanvasLayer"]
+script = ExtResource("1_ajtt3")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 447.0
+offset_right = 1151.0
+offset_bottom = 647.0
+
+[node name="Left" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 83.0
+offset_right = 100.0
+offset_bottom = 149.0
+
+[node name="Right" type="Button" parent="Control"]
+offset_left = 168.0
+offset_top = 82.0
+offset_right = 240.0
+offset_bottom = 148.0
+
+[node name="Up" type="Button" parent="Control"]
+offset_left = 98.0
+offset_top = 18.0
+offset_right = 169.0
+offset_bottom = 83.0
+
+[node name="Attack" type="Button" parent="Control"]
+offset_left = 996.0
+offset_top = 39.0
+offset_right = 1088.0
+offset_bottom = 128.0

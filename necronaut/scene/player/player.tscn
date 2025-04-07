@@ -1,8 +1,9 @@
-[gd_scene load_steps=60 format=3 uid="uid://bnwfrk70ha0xn"]
+[gd_scene load_steps=61 format=3 uid="uid://bnwfrk70ha0xn"]
 
 [ext_resource type="Script" path="res://scene/player/Player.cs" id="1_0it2r"]
 [ext_resource type="Texture2D" uid="uid://k04odnb3c2e" path="res://assets/Character skin/male player 1.png" id="2_o1b4p"]
 [ext_resource type="Texture2D" uid="uid://5nxxh5lffmnr" path="res://assets/textures of light/64x64.png" id="2_qye5i"]
+[ext_resource type="PackedScene" uid="uid://h4ragkijrukj" path="res://scene/interface/Control/Conroll.tscn" id="4_cubhr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nl11i"]
 size = Vector2(17, 44)
@@ -469,3 +470,5 @@ process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
 drag_horizontal_enabled = true
+
+[node name="Conroll" parent="." instance=ExtResource("4_cubhr")]

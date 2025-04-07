@@ -53,6 +53,11 @@ public partial class Player : CharacterBody2D
 	[Export] private float doubleJumpMultiplier = 0.7f;
 	private int jumpsUsed = 0;
 
+	private Button leftButton;
+	private Button rightButton;
+	private Button upButton;
+	private Button attackButton;
+	
 	public bool isAlive()
 	{
 		return !isDead;
@@ -60,7 +65,10 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
 	{
 		collision_shape = GetNode<CollisionShape2D>("CollisionShape2D");
-
+		leftButton = GetNode<CanvasLayer>("Conroll").GetNode<Control>("Control").GetNode<Button>("Left");
+		rightButton = GetNode<CanvasLayer>("Conroll").GetNode<Control>("Control").GetNode<Button>("Right");
+		upButton = GetNode<CanvasLayer>("Conroll").GetNode<Control>("Control").GetNode<Button>("Up");
+		attackButton = GetNode<CanvasLayer>("Conroll").GetNode<Control>("Control").GetNode<Button>("Attack");
 		_sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		_sprite.SpeedScale = _defaultSpeedScale;
 		_sprite.AnimationFinished += OnAnimationFinished;
@@ -137,6 +145,14 @@ public partial class Player : CharacterBody2D
 		Vector2 velocity = Velocity;
 
 		direction = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");
+		if(leftButton.IsPressed())
+		{
+			direction-=1;
+		}
+		else if(rightButton.IsPressed())
+		{
+			direction+=1;
+		}
 		if (direction != 0)
 		{
 			velocity.X = direction * Speed;
@@ -157,7 +173,7 @@ public partial class Player : CharacterBody2D
 	// Обработка прыжков (одинарный и двойной)
 	private void ProcessJump()
 	{
-		if (Input.IsActionJustPressed("jump"))
+		if (Input.IsActionJustPressed("jump") || upButton.IsPressed())
 		{
 			if (IsOnFloor())
 			{
@@ -165,7 +181,7 @@ public partial class Player : CharacterBody2D
 				_isJumped = true;
 				jumpsUsed = 1;
 			}
-			else if (jumpsUsed < maxJumps)
+			if (jumpsUsed < maxJumps)
 			{
 				Velocity = new Vector2(Velocity.X, JumpVelocity * doubleJumpMultiplier);
 				jumpsUsed++;
@@ -181,7 +197,7 @@ public partial class Player : CharacterBody2D
 	// Обработка ввода для атаки
 	private void ProcessAttackInput()
 	{
-		if (Input.IsActionJustPressed("attack"))
+		if (Input.IsActionJustPressed("attack") || attackButton.IsPressed())
 		{
 			if (!IsOnFloor())
 			{
