@@ -20,18 +20,21 @@ offset_right = 100.0
 offset_bottom = 149.0
 
 [node name="Right" type="Button" parent="Control"]
+layout_mode = 0
 offset_left = 168.0
 offset_top = 82.0
 offset_right = 240.0
 offset_bottom = 148.0
 
 [node name="Up" type="Button" parent="Control"]
+layout_mode = 0
 offset_left = 98.0
 offset_top = 18.0
 offset_right = 169.0
 offset_bottom = 83.0
 
 [node name="Attack" type="Button" parent="Control"]
+layout_mode = 0
 offset_left = 996.0
 offset_top = 39.0
 offset_right = 1088.0

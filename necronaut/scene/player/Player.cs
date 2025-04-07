@@ -170,29 +170,43 @@ public partial class Player : CharacterBody2D
 		Velocity = velocity;
 	}
 
-	// Обработка прыжков (одинарный и двойной)
-	private void ProcessJump()
+	// Добавим переменную для отслеживания однократного нажатия кнопки
+private bool _upButtonPressed = false;
+
+private void ProcessJump()
+{
+	// Проверяем нажатие кнопки клавиатуры или тач-управления
+	if (Input.IsActionJustPressed("jump") || (upButton.IsPressed() && !_upButtonPressed))
 	{
-		if (Input.IsActionJustPressed("jump") || upButton.IsPressed())
-		{
-			if (IsOnFloor())
-			{
-				Velocity = new Vector2(Velocity.X, JumpVelocity);
-				_isJumped = true;
-				jumpsUsed = 1;
-			}
-			if (jumpsUsed < maxJumps)
-			{
-				Velocity = new Vector2(Velocity.X, JumpVelocity * doubleJumpMultiplier);
-				jumpsUsed++;
-			}
-		}
+		_upButtonPressed = true; // Блокируем повторные нажатия кнопки UpButton
+
 		if (IsOnFloor())
 		{
-			_isJumped = false;
-			jumpsUsed = 0;
+			Velocity = new Vector2(Velocity.X, JumpVelocity);
+			_isJumped = true;
+			jumpsUsed = 1;
+		}
+		else if (jumpsUsed < maxJumps)
+		{
+			Velocity = new Vector2(Velocity.X, JumpVelocity * doubleJumpMultiplier);
+			jumpsUsed++;
 		}
 	}
+
+	// Сбрасываем флаг _upButtonPressed, если пользователь отпустил кнопку UpButton
+	if (!upButton.IsPressed())
+	{
+		_upButtonPressed = false;
+	}
+
+	// Если персонаж на земле, сбрасываем счётчик прыжков
+	if (IsOnFloor())
+	{
+		_isJumped = false;
+		jumpsUsed = 0;
+	}
+}
+
 
 	// Обработка ввода для атаки
 	private void ProcessAttackInput()
@@ -206,7 +220,6 @@ public partial class Player : CharacterBody2D
 				_airAttackTimer = _airAttackStallTime;
 				_hasStartedDive = false;
 				_wasOnFloor = false;
-
 			}
 			else
 			{
