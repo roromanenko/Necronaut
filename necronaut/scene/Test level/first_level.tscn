@@ -10,10 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://dve7rcyrbhycf" path="res://scene/decoration/Rock 2.tscn" id="6_ve62b"]
 [ext_resource type="PackedScene" uid="uid://6lt54pafnj4w" path="res://scene/decoration/Rock 3.tscn" id="7_esm1w"]
 [ext_resource type="PackedScene" uid="uid://dau47c2k1i4o1" path="res://scene/decoration/Beam 2.tscn" id="8_kad3k"]
-[ext_resource type="PackedScene" path="res://scene/decoration/Cross 1.tscn" id="9_sefun"]
-[ext_resource type="PackedScene" path="res://scene/decoration/Cross 2.tscn" id="10_ghii5"]
+[ext_resource type="PackedScene" uid="uid://dundvyj4ddwep" path="res://scene/decoration/Cross 1.tscn" id="9_sefun"]
+[ext_resource type="PackedScene" uid="uid://brlpub1n6lhpo" path="res://scene/decoration/Cross 2.tscn" id="10_ghii5"]
 [ext_resource type="AudioStream" uid="uid://d4hwwwkvcldcv" path="res://assets/audio/music/forest_sounds.mp3" id="12_d3soi"]
-[ext_resource type="PackedScene" path="res://scene/decoration/Portal.tscn" id="12_k7pl0"]
+[ext_resource type="PackedScene" uid="uid://bnbrivirjt4h7" path="res://scene/decoration/Portal.tscn" id="12_k7pl0"]
 [ext_resource type="PackedScene" uid="uid://2qtkmokq0grm" path="res://scene/player/Face/FaceIconManager.tscn" id="14_2rqb6"]
 [ext_resource type="PackedScene" uid="uid://d3g5ll7gmqgkm" path="res://scene/player/Face/Face Full HP icone.tscn" id="14_h32vo"]
 [ext_resource type="PackedScene" uid="uid://dqk8nx8xch636" path="res://scene/interface/bar/LifeBar.tscn" id="14_k00ic"]
@@ -1391,7 +1391,7 @@ position = Vector2(3021, 1803)
 position = Vector2(5966, -307)
 
 [node name="Spawner6" parent="." instance=ExtResource("15_8y7rl")]
-position = Vector2(5002, 1263)
+position = Vector2(5007, 1237)
 
 [node name="Spawner7" parent="." instance=ExtResource("15_8y7rl")]
 position = Vector2(3962, 1206)
@@ -1421,7 +1421,7 @@ position = Vector2(5903, 2353)
 position = Vector2(7109, 1556)
 
 [node name="Spawner2" parent="." instance=ExtResource("15_8y7rl")]
-position = Vector2(1507, 540)
+position = Vector2(1556, 529)
 
 [node name="Spawner4" parent="." instance=ExtResource("15_8y7rl")]
 position = Vector2(3631, 3708)
@@ -1512,3 +1512,9 @@ environment = SubResource("Environment_dxqys")
 position = Vector2(8078, 467)
 scale = Vector2(6, 6)
 FinalUiScene = ExtResource("24_n5gjh")
+
+[node name="Spawner20" parent="." instance=ExtResource("15_8y7rl")]
+position = Vector2(7734, 406)
+
+[node name="Spawner21" parent="." instance=ExtResource("15_8y7rl")]
+position = Vector2(4715, -160)
